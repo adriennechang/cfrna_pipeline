@@ -21,3 +21,6 @@ analysis/
 wbRNA_analysis/
 archive/
 *.snakemake*
+*.ipynb_checkpoints/*
+machine_learning/output/
+*.Rhistory
