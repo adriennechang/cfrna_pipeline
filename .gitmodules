@@ -1,0 +1,3 @@
+[submodule "takara_human_V2/workflow/software/STAR-2.6"]
+	path = takara_human_V2/workflow/software/STAR-2.6
+	url = https://github.com/alexdobin/STAR
