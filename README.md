@@ -44,6 +44,13 @@ install_github("Danko-Lab/BayesPrism/BayesPrism")
 q()
 ```
 
-### Copy the pipeline:
-Esetimated time 1 minute: 
-
+### Copy the pipeline and run a test:
+Estimated time: 20 minutes 
+1. Clone the repository
+```
+git clone https://github.com/adriennechang/cfrna_pipeline
+```
+2. Change into the pipeline directory
+```
+snakemake --cores 2 -k
+```
