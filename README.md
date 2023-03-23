@@ -64,7 +64,7 @@ Rscript run_all_batch_limma.r
 ```
 
 ## Analysis
-The following software and versions were used to generate the analysis scripts:  
+The expected outputs from the main pipeline and machine learning pipeline can be found in "files_for_manuscript". The following software and versions were used to generate the analysis scripts, which are provided for each figure:  
   
 R version 4.1.3 (2022-03-10)  
 Platform: x86_64-conda-linux-gnu (64-bit)  
