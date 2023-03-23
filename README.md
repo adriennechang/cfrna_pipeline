@@ -84,4 +84,5 @@ Running under: Rocky Linux 9.0 (Blue Onyx)
 - limma_3.50.3 
 - magrittr_2.0.3
 - stringr_1.4.1 
+- ggpubr_0.4.0
 
