@@ -7,7 +7,7 @@ date: "2023-03-22"
 
 ### FIGURE 2A
 ```{r}
-set.seed(42)
+set.seed(21) ## Changing the seed randomizes the greedy forward search
 
 suppressMessages(library(dplyr))
 suppressMessages(library(ggplot2))
