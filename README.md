@@ -65,11 +65,8 @@ Rscript run_all_batch_limma.r
 
 ## Analysis
 The following software and versions were used to generate the analysis scripts:
-
 R version 4.1.3 (2022-03-10)
-
 Platform: x86_64-conda-linux-gnu (64-bit)
-
 Running under: Rocky Linux 9.0 (Blue Onyx)
 
 - reshape2_1.4.4
@@ -85,4 +82,5 @@ Running under: Rocky Linux 9.0 (Blue Onyx)
 - edgeR_3.36.0
 - limma_3.50.3 
 - magrittr_2.0.3
+- stringr_1.4.1 
 
