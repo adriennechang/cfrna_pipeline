@@ -1,0 +1,94 @@
+---
+title: "Figure3"
+output: html_document
+date: "2023-03-22"
+---
+### FIGURE 3C
+```{r}
+suppressMessages(library(reshape2))
+suppressMessages(library(dplyr))
+suppressMessages(library(ggplot2))
+counts = read.table("../files_for_manuscript/count_matrix.txt", row.names=c(1))
+gene.list = read.table("../files_for_manuscript/gencode.biotype.name.key.tsv", header=T, sep="\t")
+meta_data = read.table("../files_for_manuscript/meta_data.txt", sep="\t", header=T)
+cil = counts[rownames(counts) %in% gene.list[gene.list$gene_name %in%
+                                                 c("STAT1", "CASP4","MARCO","GBP1","GBP2","GBP4","GBP5"),1], ] 
+cil$gene_id = rownames(cil)
+cil.melt = melt(cil, id.var="gene_id")
+cil.melt = merge(cil.melt, meta_data, by.x="variable",by.y="Cornell_ID")
+```
+
+```{r}
+GeomSplitViolin <- ggproto("GeomSplitViolin", GeomViolin, 
+                           draw_group = function(self, data, ..., draw_quantiles = NULL) {
+                               data <- transform(data, xminv = x - violinwidth * (x - xmin), xmaxv = x + violinwidth * (xmax - x))
+                               grp <- data[1, "group"]
+                               newdata <- plyr::arrange(transform(data, x = if (grp %% 2 == 1) xminv else xmaxv), if (grp %% 2 == 1) y else -y)
+                               newdata <- rbind(newdata[1, ], newdata, newdata[nrow(newdata), ], newdata[1, ])
+                               newdata[c(1, nrow(newdata) - 1, nrow(newdata)), "x"] <- round(newdata[1, "x"])
+                               
+                               if (length(draw_quantiles) > 0 & !scales::zero_range(range(data$y))) {
+                                   stopifnot(all(draw_quantiles >= 0), all(draw_quantiles <=
+                                                                               1))
+                                   quantiles <- ggplot2:::create_quantile_segment_frame(data, draw_quantiles)
+                                   aesthetics <- data[rep(1, nrow(quantiles)), setdiff(names(data), c("x", "y")), drop = FALSE]
+                                   aesthetics$alpha <- rep(1, nrow(quantiles))
+                                   both <- cbind(quantiles, aesthetics)
+                                   quantile_grob <- GeomPath$draw_panel(both, ...)
+                                   ggplot2:::ggname("geom_split_violin", grid::grobTree(GeomPolygon$draw_panel(newdata, ...), quantile_grob))
+                               }
+                               else {
+                                   ggplot2:::ggname("geom_split_violin", GeomPolygon$draw_panel(newdata, ...))
+                               }
+                           })
+
+geom_split_violin <- function(mapping = NULL, data = NULL, stat = "ydensity", position = "identity", ..., 
+                              draw_quantiles = NULL, trim = TRUE, scale = "area", na.rm = FALSE, 
+                              show.legend = NA, inherit.aes = TRUE) {
+    layer(data = data, mapping = mapping, stat = stat, geom = GeomSplitViolin, 
+          position = position, show.legend = show.legend, inherit.aes = inherit.aes, 
+          params = list(trim = trim, scale = scale, draw_quantiles = draw_quantiles, na.rm = na.rm, ...))
+}
+```
+
+
+```{r}
+cil.melt %>% group_by(variable,  gene_id, Microbiologic.reference.standard) %>%
+    summarise(val = (log(as.numeric(value),2))) %>% merge(., gene.list, by="gene_id") %>%
+    ggplot(aes(x=gene_name, y=val, fill=Microbiologic.reference.standard))+ geom_split_violin()+
+    scale_fill_manual(values=c("#433F60","#FF70A6")) + theme_bw()+
+    ylab("log2(counts per million + 1)")  + coord_flip()
+```
+
+
+### FIGURE 3D
+```{r}
+set.seed(42)
+
+suppressMessages(library(dplyr))
+suppressMessages(library(ggplot2))
+suppressMessages(library(edgeR))
+suppressMessages(library(pROC))
+suppressMessages(library(magrittr))
+suppressMessages(library(caret))
+
+metadata_file = "../files_for_manuscript/meta_data.txt"
+count.matrix_file = "../files_for_manuscript/count_matrix.txt"
+
+```
+
+```{r}
+counts = counts %>% data.frame()
+tmp = counts[rownames(counts) =="ENSG00000154451.14" ,] %>%
+    data.frame() %>% mutate_all(as.numeric)  %>%
+    mutate( log2( . + 1)) %>% 
+    t() %>%
+    set_colnames("pos_score")
+tmp = merge(tmp, meta_data, by.x="row.names", by.y="Cornell_ID")
+plot.roc(tmp$Microbiologic.reference.standard, tmp$pos_score, print.auc=TRUE)
+```
+
+```{r}
+ci.auc(tmp$Microbiologic.reference.standard, tmp$pos_score, print.auc=TRUE)
+```
+

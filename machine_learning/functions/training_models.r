@@ -456,7 +456,7 @@ C5_TRAIN <- function(counts,meta_data){
 EXTRATREES_TRAIN <- function(counts,meta_data){
     
     set.seed(42)
-
+  require(ranger)
     control <- trainControl(method="cv",number=5, 
                             classProbs = TRUE)
         

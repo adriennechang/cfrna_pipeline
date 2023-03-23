@@ -96,7 +96,7 @@ DESEQ2_feature_selection <- function(counts,
                                      group2_name,
                                      NGENES,
                                      BASEMEAN = 0,
-                                     gene_biotype_key_path = "/workdir/cfrna/references/human/hg38/gencode.biotype.name.key.tsv"
+                                     gene_biotype_key_path = "../files_for_manuscript/gencode.biotype.name.key.tsv"
                              ){
     
     #####
@@ -114,6 +114,8 @@ DESEQ2_feature_selection <- function(counts,
     suppressMessages(library(limma))
     ##------------------------------------
     # Contstruct DESeq Data Set
+    meta_data$group = factor(meta_data$group)
+    meta_data$cohort = factor(meta_data$cohort)
     dds <- DESeqDataSetFromMatrix(round(counts),
                                     colData = meta_data,
                                     design = ~ group + cohort +0)

@@ -1,0 +1,205 @@
+---
+title: "Figure1"
+output: html_document
+date: "2023-03-22"
+---
+```{r}
+set.seed(42)
+```
+
+## FIGURE 1B
+
+```{r}
+suppressMessages(library(tidyverse))
+suppressMessages(library(reshape2))
+suppressMessages(library(dplyr))
+suppressMessages(library(qualpalr))
+```
+
+```{r}
+meta_data = read.table("../files_for_manuscript/meta_data.txt", sep="\t",header=T)
+head(meta_data)
+```
+```{r}
+decon = read.table("../files_for_manuscript/cto.txt", sep="\t", header=T)
+decon_melt = melt(decon, id.vars="sample_id") %>% rename(celltype= variable, fraction=value)
+decon_melt = merge(decon_melt, meta_data, by.x="sample_id", by.y="Cornell_ID")
+head(decon_melt)
+```
+
+```{r}
+results = decon_melt
+sum = results %>% group_by(celltype) %>% summarize(mean=mean(fraction))
+sum = sum[order(sum$mean, decreasing=TRUE),]
+
+genes = sum$celltype
+
+num_cells = length(genes)
+pal = c('#1362AB','#740C33','#2C8DAF','#FB927F','#5CFBF4','#0234C1','#86C35E','#B414A8','#F191B8','#949D0A','#700862','#F5DB9E','#209510','#DBB008','#5C6BFA','#B27DF2','#D6F306','#5EFE36','#A9DAC9','#B2040D','#203760','#4D5D0D','#4A1E80','#F63DFA','#F8169B','#175738','#0C8559','#A1506B','#861FF1','#2BBBB3','#5E210C','#36B976','#CAA376','#D75E16','#73480D','#39F9AD','#85D2F8','#65A2FC','#FC092B','#94A514','#AEBBE6')
+
+colors = pal[1:8]
+labels = genes
+
+val_vector = colors
+names(val_vector) = c("Platelet","Myeloid.progenitor","B.cell","Endothelial.cell","NK.Cell","Monocyte","neutrophil", "other")
+
+results$celltype2 = results$celltype
+results$celltype2[!(results$celltype2) %in% c("Platelet","Myeloid.progenitor","B.cell","Endothelial.cell","NK.Cell","Monocyte","neutrophil")] = "other"
+```
+
+
+```{r}
+results %>% group_by(sample_id, cohort, celltype2) %>% summarise(fraction=sum(fraction)) %>% group_by(celltype2,cohort) %>% 
+    summarise(fraction=mean(fraction)) %>% 
+    ggplot(aes(x=cohort,y=fraction,fill=celltype2))+
+    geom_bar(position="stack",stat="identity", colour="black",size = 0.15)+
+    theme_minimal(base_size=20)+
+    theme(plot.margin=grid::unit(c(1,0,0,0), "mm"),
+          legend.position = "top",
+          axis.title.x = element_blank(), 
+          legend.text=element_text(size=10), legend.title= element_blank(), legend.key.size=unit(0.25, 'cm'))+
+    scale_fill_manual(values=val_vector) + scale_x_discrete(labels=c("END TB\nn=89", "R2D2\nn=93"))
+```
+### FIGURE 1C
+
+```{r}
+suppressMessages(library(DESeq2))
+suppressMessages(library(data.table))
+suppressMessages(library(pheatmap))
+```
+
+
+```{r}
+SAMPLE_ID_VAR = "Cornell_ID"
+GROUPS = c("Positive","Negative")
+
+meta_data$expGroup = meta_data$Microbiologic.reference.standard
+meta_data$expGroup = gsub(meta_data$expGroup, pattern="TB ", replacement="")
+
+gene_name_key = "../files_for_manuscript/gencode.biotype.name.key.tsv"
+
+counts = read.table("../files_for_manuscript/count_matrix.txt", row.names=c(1))
+head(counts)
+```
+
+```{r}
+## Construct DESeqDataSet
+
+dds = DESeqDataSetFromMatrix(round(counts), colData = meta_data,
+                                     design = ~ expGroup + HIV.status + cohort + 0)
+
+## Add Gene metadata
+annotation = fread(file = gene_name_key)
+annotation = annotation[match(rownames(dds), annotation$gene_id),]
+all(rownames(dds) == annotation$ftcount_id)
+mcols(dds)=cbind(mcols(dds),annotation)
+
+## Re-factor
+dds$expGroup = factor(dds$expGroup, levels=GROUPS)
+
+## DAA
+dds = DESeq(dds)
+vsd = vst(dds, blind=FALSE)
+mat = assay(vsd)
+mat = limma::removeBatchEffect(mat, vsd$cohort)
+assay(vsd) = mat
+counts_batch_corrected = assay(vsd)
+
+## Analyze results
+res = results(dds, alpha=0.01, contrast = c("expGroup","Positive","Negative"))
+
+res$gene_name = mcols(dds)$gene_name
+res$gene_type = mcols(dds)$gene_type
+
+summary(res)
+```
+
+```{r}
+library(RColorBrewer)
+
+SIG_THRESH = 0.01
+FC_THRESH =0.5
+
+sig_genes <- data.frame(res) %>% filter(padj < SIG_THRESH & abs(log2FoldChange) > FC_THRESH) %>% rownames()
+
+mat <- t(scale(t(data.frame(counts_batch_corrected) %>% filter(row.names(counts_batch_corrected) %in% all_of(sig_genes)))))
+
+##---------------------
+# Prepare meta data and colors for annotations
+anno = meta_data[match(colnames(mat),meta_data[[SAMPLE_ID_VAR]]),] %>% dplyr::select(expGroup, HIV.status,cohort, 
+                                                                                 Country)
+rownames(anno) = colnames(mat)
+colnames(anno) = c("expGroup", "HIV.Status",
+                   "cohort", 
+                   "Country")
+
+mycolors <- list(
+    expGroup = c("Positive" = "#ff70a6",
+                 "Negative" = "#2E294E"
+    ),
+    HIV.Status = c("Positive"= "#f77f00",
+                   "Negative" = "#8F2D56"),
+    cohort = c("GHL" = "#73D2DE",
+               "R2D2" = "#b5179e"),
+    Country = c("Uganda" = "#218380",
+                "Vietnam" = "#FFBC42",
+                "Philippines" = "#D81159")
+)
+
+color = colorRampPalette(c("blue","yellow"))(50)
+
+
+breaksList = seq(-2, 2, by = .1)
+
+
+##---------------------
+# Plot
+
+heatmap_plt <- pheatmap(
+    mat,
+    # Colors
+    col=color,
+    breaks=breaksList, 
+    annotation_col=anno,
+    annotation_colors=mycolors,
+    na_col = "#FFFFFF",
+    
+    # Fonts
+    show_colnames=F,
+    show_rownames=F,
+    fontsize=12,
+    fontsize_col=3,
+    annotation_names_col=F,
+    annotation_names_row=F,
+    
+    # Clustering
+    
+    clustering_distance_cols="correlation",
+    clustering_distance_rows="correlation", 
+    treeheight_row=0,
+    treeheight_col= 15,
+    
+    # Misc.
+    border_color=NA,
+    legend=FALSE,
+    annotation_legend=TRUE)
+
+heatmap_plt
+
+```
+
+
+### FIGURE 1D
+```{r}
+canonical_path = read.table("../files_for_manuscript/ipa_output.txt" , sep="\t", header=T)
+canonical_path$mol_num= unlist(lapply(unlist(canonical_path$Molecules), function(x){length(unlist(strsplit( x, ",")))}))
+canonical_path %>% filter(X.log.p.value. > 1.3) %>% filter(abs(z.score)>1.5)%>%  filter(mol_num > 6) %>% ggplot(aes(x=reorder(Ingenuity.Canonical.Pathways, abs(X.log.p.value.)), y=abs(X.log.p.value.),fill=ifelse(z.score>0,"#D81159", "#218380"))) + geom_bar(stat='identity') + coord_flip()  + theme_bw(base_size=8) + theme(axis.title.y=element_blank(), legend.key.size = unit(0.25, 'cm'), legend.title=element_text(size=6), legend.text=element_text(size=4), legend.position="none", axis.text = element_text(color="black")) + ylab("z-score")
+```
+### FIGURE 1E
+```{r}
+auc_all = read.table("../files_for_manuscript/ml_auc.txt", header=T)
+head(auc_all)
+ggplot(auc_all, aes(x=model, y=variable, fill=as.numeric(value))) + geom_tile() + scale_fill_gradient2("AUC", low= "#FFBC42",mid="#FFF1D0", high="navy", midpoint=0.80) +coord_equal() + theme_minimal(base_size=20) + theme(axis.title=element_blank(), axis.text.x=element_text(angle=60, hjust=1, vjust=1, color="black"), legend.position="top", legend.text=element_text(size=10, color="black"), legend.title=element_text(size=10, color="black"), axis.text.y=element_text(color="black"))
+
+```
+

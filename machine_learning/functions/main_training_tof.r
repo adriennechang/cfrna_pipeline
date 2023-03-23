@@ -7,7 +7,7 @@ MAIN <- function(group1_name,
                  group2_name,
                  FILE_NAME,
                  count_matrix_path,
-                 meta_data_path,qc,
+                 meta_data_path,
                  id_column,
                  group_column,
                  gene_blacklist_path,
@@ -31,7 +31,7 @@ MAIN <- function(group1_name,
     read_data_list <- READ_DATA(group1_name,
                  group2_name,
                  count_matrix_path,
-                 meta_data_path,qc,
+                 meta_data_path,
                  id_column,
                  group_column,
                  gene_blacklist_path)
@@ -40,7 +40,7 @@ MAIN <- function(group1_name,
     meta_data <- read_data_list[['meta_data']]
     
 
-    if (!all(colnames(count_matrix) == meta_data$sample_id)){
+    if (!all(colnames(count_matrix) == meta_data$Cornell_ID)){
         print("ISSUE")
         count_matrix = data.frame()
     }
@@ -112,7 +112,7 @@ MAIN <- function(group1_name,
 READ_DATA <- function(group1_name,
                  group2_name,
                  count_matrix_path,
-                 meta_data_path,qc,
+                 meta_data_path,
                  id_column,
                  group_column,
                  gene_blacklist_path){
@@ -124,10 +124,7 @@ READ_DATA <- function(group1_name,
 
     ##------------------------------------
     ## Meta Data
-   qc_df = read.delim(qc)
 	meta_data = read.delim(meta_data_path)
-  meta_data = meta_data[meta_data$Cornell_ID %in% qc_df$sample_id,]
- meta_data$Cornell_ID = paste0(meta_data$Cornell_ID, "_combined") 
    meta_data[[group_column]] = gsub(meta_data[[group_column]], pattern="TB ", replacement="")
 
     meta_data$group <- factor(meta_data[[group_column]], levels = c(group1_name,group2_name))
