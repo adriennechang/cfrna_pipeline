@@ -285,8 +285,9 @@ plot_df2 = plot_df2[!is.na(plot_df2$auc),]
 plot_df2$iteration = c(seq(1:dim(plot_df2)[1]))
 plot_df2$last = sapply(strsplit(plot_df2$combination ,"_"), tail, 1)
 plot_df2 = merge(plot_df2, gene.list, by.x="last", by.y="gene_id")
+
 options(repr.plot.height=1.5, repr.plot.width=1.5)
-#pdf("gfs_genes.pdf", height=1.2, width=1.2)
+
 ggplot(plot_df2, aes(x=iteration, y=as.numeric(auc), label=gene_name))+ geom_line(color="grey50")+
 theme_bw(base_size=6) + xlab("# Genes in Model") + ylab("AUC") + 
 geom_text(hjust=0.5, vjust=0.5, size=2, color="deeppink")+
@@ -294,7 +295,6 @@ scale_x_continuous(breaks=scales::pretty_breaks()) +
 ylab("ROC-AUC") + xlab("Iteration") +
 theme(axis.text=element_text(size=6, color="black"),
      axis.title=element_text(size=8, color="black"))
-#dev.off()
 ```
 
 ```{r}
@@ -361,7 +361,7 @@ counts_test = counts_test %>% t() %>% data.frame()
     }
 
 
-roc_test = roc(df_test$Microbiologic.reference.standard, df_test$score)
+roc_test = roc(df_test$Microbiologic.reference.standard, df_test$score, percent=T)
 ```
 
 ```{r}
@@ -428,7 +428,7 @@ best_genes = unlist(str_split(best,"_"))
 
 
 
-roc_train = roc(df_train$Microbiologic.reference.standard, df_train$score)
+roc_train = roc(df_train$Microbiologic.reference.standard, df_train$score, percent=T)
 ```
 
 ```{r}
@@ -452,7 +452,7 @@ mutate(Semiquant.Xpert.result.3 = factor(Semiquant.Xpert.result.3, levels=c("Neg
 
 roc_val = df_val %>% filter(!is.na(Microbiologic.reference.standard)) %>% 
 mutate(Microbiologic.reference.standard = factor(Microbiologic.reference.standard, levels=c("Negative","Positive"))) %>%
-roc(Microbiologic.reference.standard, score)
+roc(Microbiologic.reference.standard, score, percent=T)
 
 roc_val
 ```
@@ -583,7 +583,6 @@ semiq_counts$cohort[semiq_counts$cohort=="GHL"]= "END TB"
 
 ```{r}
 options(repr.plot.height=1.6, repr.plot.width=1.9)
-
 semiq_counts %>% 
     mutate(Semiquant.Xpert.result.3 = factor(Semiquant.Xpert.result.3, levels=c("Negative","Low","Medium","High"))) %>%
 filter(Semiquant.Xpert.result.3 !="") %>%
@@ -594,7 +593,7 @@ filter(Semiquant.Xpert.result.3 !="") %>%
          axis.text=element_text(color="black", size=6),
          axis.title=element_text(color="black",size=8)) +
     xlab("GeneXpert Semiquantitative Result") + ylab("9-gene TB score")  +
-    scale_color_manual(values=c("#D81159", "#73D2DE","#96be25"))  +
+    scale_color_manual(values=c("#00D2DE", "#B5179E","#96be25"))  +
 geom_hline(yintercept=youden, linetype="dashed")
 ```
 
@@ -637,5 +636,9 @@ facet_wrap(.~variable, scales="free", strip.position="bottom")+
 
 ```{r}
 cxr %>% group_by(variable) %>% summarise(cor = cor(value, score, method="pearson"))
+```
+
+```{r}
+convert_ipynb("Fig2_code.ipynb", output = xfun::with_ext("Fig2_code", "Rmd"))
 ```
 
