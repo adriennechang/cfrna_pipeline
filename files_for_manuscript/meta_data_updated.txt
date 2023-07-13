@@ -1,0 +1,363 @@
+Cornell_ID	Country	cohort	HIV.status	Microbiologic.reference.standard	Semiquant.Xpert.result.3	Biofluid	expGroup
+TBSQUARE_cfRNA_553_combined	Uganda	TBSQUARE	Negative	Positive	High	plasma	Positive
+TBSQUARE_cfRNA_561_combined	Uganda	TBSQUARE	Negative	Positive	Medium	plasma	Positive
+TBSQUARE_cfRNA_554_combined	Uganda	TBSQUARE	Negative	Negative		plasma	Negative
+TBSQUARE_cfRNA_555_combined	Uganda	TBSQUARE	Negative	Positive	Medium	plasma	Positive
+TBSQUARE_cfRNA_564_combined	Uganda	TBSQUARE	Negative	Negative		plasma	Negative
+TBSQUARE_cfRNA_557_combined	Uganda	TBSQUARE	Negative	Negative		plasma	Negative
+TBSQUARE_cfRNA_568_combined	Uganda	TBSQUARE	Negative	Negative		plasma	Negative
+TBSQUARE_cfRNA_569_combined	Uganda	TBSQUARE	Negative	Positive	Medium	plasma	Positive
+TBSQUARE_cfRNA_570_combined	Uganda	TBSQUARE	Negative	Positive	High	plasma	Positive
+TBSQUARE_cfRNA_572_combined	Uganda	TBSQUARE	Negative	Negative		plasma	Negative
+TBSQUARE_cfRNA_573_combined	Uganda	TBSQUARE	Negative	Positive	High	plasma	Positive
+TBSQUARE_cfRNA_583_combined	Uganda	TBSQUARE	Positive	Negative		plasma	Negative
+TBSQUARE_cfRNA_584_combined	Uganda	TBSQUARE	Positive	Positive	High	plasma	Positive
+TBSQUARE_cfRNA_578_combined	Uganda	TBSQUARE	Negative	Positive	Medium	plasma	Positive
+TBSQUARE_cfRNA_591_combined	Uganda	TBSQUARE	Negative	Positive	Medium	plasma	Positive
+TBSQUARE_cfRNA_589_combined	Uganda	TBSQUARE	Negative	Negative		plasma	Negative
+TBSQUARE_cfRNA_597_combined	Uganda	TBSQUARE	Positive	Positive	Medium	plasma	Positive
+TBSQUARE_cfRNA_598_combined	Uganda	TBSQUARE	Negative	Positive	High	plasma	Positive
+TBSQUARE_cfRNA_596_combined	Uganda	TBSQUARE	Negative	Negative		plasma	Negative
+TBSQUARE_cfRNA_601_combined	Uganda	TBSQUARE	Negative	Positive	Medium	plasma	Positive
+TBSQUARE_cfRNA_602_combined	Uganda	TBSQUARE	Positive	Positive	Low	plasma	Positive
+TBSQUARE_cfRNA_603_combined	Uganda	TBSQUARE	Positive	Negative		plasma	Negative
+TBSQUARE_cfRNA_611_combined	Uganda	TBSQUARE	Positive	Positive	Low	plasma	Positive
+TBSQUARE_cfRNA_612_combined	Uganda	TBSQUARE	Negative	Positive	High	plasma	Positive
+TBSQUARE_cfRNA_613_combined	Uganda	TBSQUARE	Negative	Negative		plasma	Negative
+TBSQUARE_cfRNA_614_combined	Uganda	TBSQUARE	Negative	Positive	High	plasma	Positive
+TBSQUARE_cfRNA_616_combined	Uganda	TBSQUARE	Negative	Negative		plasma	Negative
+TBSQUARE_cfRNA_617_combined	Uganda	TBSQUARE	Negative	Positive	High	plasma	Positive
+TBSQUARE_cfRNA_618_combined	Uganda	TBSQUARE	Negative	Positive	Medium	plasma	Positive
+TBSQUARE_cfRNA_608_combined	Uganda	TBSQUARE	Negative	Negative		plasma	Negative
+TBSQUARE_cfRNA_609_combined	Uganda	TBSQUARE	Negative	Positive	High	plasma	Positive
+TBSQUARE_cfRNA_610_combined	Uganda	TBSQUARE	Negative	Negative		plasma	Negative
+TBSQUARE_cfRNA_619_combined	Uganda	TBSQUARE	Negative	Negative		plasma	Negative
+TBSQUARE_cfRNA_620_combined	Uganda	TBSQUARE	Positive	Positive	Low	plasma	Positive
+TBSQUARE_cfRNA_623_combined	Uganda	TBSQUARE	Negative	Positive	High	plasma	Positive
+TBSQUARE_cfRNA_628_combined	Uganda	TBSQUARE	Negative	Positive	Low	plasma	Positive
+TBSQUARE_cfRNA_630_combined	Uganda	TBSQUARE	Positive	Positive	Low	plasma	Positive
+TBSQUARE_cfRNA_631_combined	Uganda	TBSQUARE	Positive	Negative		plasma	Negative
+TBSQUARE_cfRNA_634_combined	Uganda	TBSQUARE	Negative			plasma	
+TBSQUARE_cfRNA_635_combined	Uganda	TBSQUARE	Negative	Positive	Medium	plasma	Positive
+TBSQUARE_cfRNA_636_combined	Uganda	TBSQUARE	Negative	Positive	High	plasma	Positive
+TBSQUARE_cfRNA_637_combined	Uganda	TBSQUARE	Negative	Negative	Trace	plasma	Negative
+TBSQUARE_cfRNA_638_combined	Uganda	TBSQUARE	Negative	Negative		plasma	Negative
+TBSQUARE_cfRNA_640_combined	Uganda	TBSQUARE	Negative	Positive	High	plasma	Positive
+TBSQUARE_cfRNA_648_combined	Uganda	TBSQUARE	Negative	Positive	Medium	plasma	Positive
+TBSQUARE_cfRNA_649_combined	Uganda	TBSQUARE	Positive	Positive	Medium	plasma	Positive
+TBSQUARE_cfRNA_661_combined	Uganda	TBSQUARE	Negative	Positive	Low	plasma	Positive
+TBSQUARE_cfRNA_697_combined	Uganda	TBSQUARE	Negative	Positive	High	plasma	Positive
+TBSQUARE_cfRNA_708_combined	Uganda	TBSQUARE	Negative	Positive	Very low	plasma	Positive
+TBSQUARE_cfRNA_698_combined	Uganda	TBSQUARE	Negative	Negative		plasma	Negative
+TBSQUARE_cfRNA_711_combined	Uganda	TBSQUARE	Negative	Positive	Medium	plasma	Positive
+TBSQUARE_cfRNA_693_combined	Uganda	TBSQUARE	Negative	Positive	Medium	plasma	Positive
+TBSQUARE_cfRNA_695_combined	Uganda	TBSQUARE	Negative	Negative	Negative	plasma	Negative
+TBSQUARE_cfRNA_696_combined	Uganda	TBSQUARE	Negative	Negative	Negative	plasma	Negative
+TBSQUARE_cfRNA_702_combined	Uganda	TBSQUARE	Negative	Negative	Negative	plasma	Negative
+TBSQUARE_cfRNA_703_combined	Uganda	TBSQUARE	Negative	Positive	Low	plasma	Positive
+R2D2_U269_combined	Uganda	R2D2	Negative	Positive	High	plasma	Positive
+R2D2_U287_combined	Uganda	R2D2	Negative	Positive	High	plasma	Positive
+R2D2_U314_combined	Uganda	R2D2	Negative	Positive	High	plasma	Positive
+R2D2_U323_combined	Uganda	R2D2	Negative	Positive	High	plasma	Positive
+R2D2_U329_combined	Uganda	R2D2	Negative	Positive	High	plasma	Positive
+R2D2_U332_combined	Uganda	R2D2	Negative	Positive	High	plasma	Positive
+R2D2_U362_combined	Uganda	R2D2	Negative	Positive	High	plasma	Positive
+R2D2_V104_combined	Vietnam	R2D2	Negative	Positive	High	plasma	Positive
+R2D2_V129_combined	Vietnam	R2D2	Negative	Positive	High	plasma	Positive
+R2D2_V130_combined	Vietnam	R2D2	Negative	Positive	High	plasma	Positive
+R2D2_V147_combined	Vietnam	R2D2	Negative	Positive	High	plasma	Positive
+R2D2_V160_combined	Vietnam	R2D2	Negative	Positive	High	plasma	Positive
+R2D2_V190_combined	Vietnam	R2D2	Negative	Positive	High	plasma	Positive
+R2D2_V218_combined	Vietnam	R2D2	Negative	Positive	High	plasma	Positive
+R2D2_V242_combined	Vietnam	R2D2	Negative	Positive	High	plasma	Positive
+R2D2_V273_combined	Vietnam	R2D2	Negative	Positive	High	plasma	Positive
+R2D2_V286_combined	Vietnam	R2D2	Negative	Positive	High	plasma	Positive
+R2D2_P152_combined	Philippines	R2D2	Negative	Positive	High	plasma	Positive
+R2D2_P22_combined	Philippines	R2D2	Negative	Positive	High	plasma	Positive
+R2D2_P33_combined	Philippines	R2D2	Negative	Positive	High	plasma	Positive
+GHL16_combined	Uganda	END TB	Negative	Positive	High	plasma	Positive
+GHL17_combined	Uganda	END TB	Negative	Positive	High	plasma	Positive
+GHL47_combined	Uganda	END TB	Negative	Positive	High	plasma	Positive
+GHL57_combined	Uganda	END TB	Negative	Positive	High	plasma	Positive
+GHL59_combined	Uganda	END TB	Negative	Positive	High	plasma	Positive
+GHL62_combined	Uganda	END TB	Positive	Positive	High	plasma	Positive
+GHL71_combined	Uganda	END TB	Negative	Positive	High	plasma	Positive
+GHL105_combined	Uganda	END TB	Negative	Positive	High	plasma	Positive
+GHL109_combined	Uganda	END TB	Positive	Positive	High	plasma	Positive
+GHL114_combined	Uganda	END TB	Positive	Positive	High	plasma	Positive
+GHL131_combined	Uganda	END TB	Negative	Positive	High	plasma	Positive
+GHL136_combined	Uganda	END TB	Negative	Positive	High	plasma	Positive
+GHL141_combined	Uganda	END TB	Negative	Positive	High	plasma	Positive
+GHL144_combined	Uganda	END TB	Negative	Positive	High	plasma	Positive
+GHL192_combined	Uganda	END TB	Negative	Positive	High	plasma	Positive
+GHL208_combined	Uganda	END TB	Negative	Positive	High	plasma	Positive
+GHL217_combined	Uganda	END TB	Negative	Positive	High	plasma	Positive
+GHL235_combined	Uganda	END TB	Positive	Positive	High	plasma	Positive
+GHL274_combined	Uganda	END TB	Positive	Positive	High	plasma	Positive
+GHL286_combined	Uganda	END TB	Negative	Positive	High	plasma	Positive
+R2D2_U286_combined	Uganda	R2D2	Positive	Positive	Low	plasma	Positive
+R2D2_U303_combined	Uganda	R2D2	Negative	Positive	Low	plasma	Positive
+R2D2_U320_combined	Uganda	R2D2	Negative	Positive	Low	plasma	Positive
+R2D2_U325_combined	Uganda	R2D2	Negative	Positive	Low	plasma	Positive
+R2D2_U355_combined	Uganda	R2D2	Negative	Positive	Low	plasma	Positive
+R2D2_U358_combined	Uganda	R2D2	Negative	Positive	Low	plasma	Positive
+R2D2_U371_combined	Uganda	R2D2	Negative	Positive	Low	plasma	Positive
+R2D2_U378_combined	Uganda	R2D2	Negative	Positive	Low	plasma	Positive
+R2D2_V166_combined	Vietnam	R2D2	Negative	Positive	Low	plasma	Positive
+R2D2_V167_combined	Vietnam	R2D2	Negative	Positive	Low	plasma	Positive
+R2D2_V193_combined	Vietnam	R2D2	Negative	Positive	Low	plasma	Positive
+R2D2_V197_combined	Vietnam	R2D2	Negative	Positive	Low	plasma	Positive
+R2D2_V20_combined	Vietnam	R2D2	Negative	Positive	Low	plasma	Positive
+R2D2_V208_combined	Vietnam	R2D2	Negative	Positive	Low	plasma	Positive
+R2D2_V213_combined	Vietnam	R2D2	Negative	Positive	Low	plasma	Positive
+R2D2_P124_combined	Philippines	R2D2	Negative	Positive	Low	plasma	Positive
+R2D2_P18_combined	Philippines	R2D2	Negative	Positive	Low	plasma	Positive
+R2D2_P232_combined	Philippines	R2D2	Negative	Positive	Low	plasma	Positive
+R2D2_P245_combined	Philippines	R2D2	Negative	Positive	Low	plasma	Positive
+R2D2_P96_combined	Philippines	R2D2	Negative	Positive	Low	plasma	Positive
+GHL18_combined	Uganda	END TB	Negative	Positive	Low	plasma	Positive
+GHL31_combined	Uganda	END TB	Negative	Positive	Low	plasma	Positive
+GHL34_combined	Uganda	END TB	Negative	Positive	Low	plasma	Positive
+GHL35_combined	Uganda	END TB	Positive	Positive	Low	plasma	Positive
+GHL84_combined	Uganda	END TB	Negative	Positive	Low	plasma	Positive
+GHL93_combined	Uganda	END TB	Negative	Positive	Low	plasma	Positive
+GHL108_combined	Uganda	END TB	Negative	Positive	Low	plasma	Positive
+GHL112_combined	Uganda	END TB	Negative	Positive	Low	plasma	Positive
+GHL124_combined	Uganda	END TB	Positive	Positive	Low	plasma	Positive
+GHL126_combined	Uganda	END TB	Negative	Positive	Low	plasma	Positive
+GHL169_combined	Uganda	END TB	Negative	Positive	Low	plasma	Positive
+GHL248_combined	Uganda	END TB	Negative	Positive	Low	plasma	Positive
+GHL264_combined	Uganda	END TB	Negative	Positive	Low	plasma	Positive
+GHL276_combined	Uganda	END TB	Positive	Positive	Low	plasma	Positive
+R2D2_U273_combined	Uganda	R2D2	Negative	Positive	Medium	plasma	Positive
+R2D2_U298_combined	Uganda	R2D2	Negative	Positive	Medium	plasma	Positive
+R2D2_U312_combined	Uganda	R2D2	Negative	Positive	Medium	plasma	Positive
+R2D2_U315_combined	Uganda	R2D2	Positive	Positive	Medium	plasma	Positive
+R2D2_U316_combined	Uganda	R2D2	Negative	Positive	Medium	plasma	Positive
+R2D2_U337_combined	Uganda	R2D2	Negative	Positive	Medium	plasma	Positive
+R2D2_U341_combined	Uganda	R2D2	Negative	Positive	Medium	plasma	Positive
+R2D2_U343_combined	Uganda	R2D2	Positive	Positive	Medium	plasma	Positive
+R2D2_U357_combined	Uganda	R2D2	Positive	Positive	Medium	plasma	Positive
+R2D2_U363_combined	Uganda	R2D2	Negative	Positive	Medium	plasma	Positive
+R2D2_V118_combined	Vietnam	R2D2	Negative	Positive	Medium	plasma	Positive
+R2D2_V127_combined	Vietnam	R2D2	Negative	Positive	Medium	plasma	Positive
+R2D2_V128_combined	Vietnam	R2D2	Negative	Positive	Medium	plasma	Positive
+R2D2_V146_combined	Vietnam	R2D2	Negative	Positive	Medium	plasma	Positive
+R2D2_V157_combined	Vietnam	R2D2	Negative	Positive	Medium	plasma	Positive
+R2D2_V165_combined	Vietnam	R2D2	Negative	Positive	Medium	plasma	Positive
+R2D2_V172_combined	Vietnam	R2D2	Negative	Positive	Medium	plasma	Positive
+R2D2_P202_combined	Philippines	R2D2	Negative	Positive	Medium	plasma	Positive
+R2D2_P214_combined	Philippines	R2D2	Negative	Positive	Medium	plasma	Positive
+R2D2_P241_combined	Philippines	R2D2	Negative	Positive	Medium	plasma	Positive
+GHL19_combined	Uganda	END TB	Negative	Positive	Medium	plasma	Positive
+GHL20_combined	Uganda	END TB	Negative	Positive	Medium	plasma	Positive
+GHL27_combined	Uganda	END TB	Negative	Positive	Medium	plasma	Positive
+GHL36_combined	Uganda	END TB	Negative	Positive	Medium	plasma	Positive
+GHL45_combined	Uganda	END TB	Negative	Positive	Medium	plasma	Positive
+GHL46_combined	Uganda	END TB	Negative	Positive	Medium	plasma	Positive
+GHL53_combined	Uganda	END TB	Negative	Positive	Medium	plasma	Positive
+GHL56_combined	Uganda	END TB	Negative	Positive	Medium	plasma	Positive
+GHL61_combined	Uganda	END TB	Negative	Positive	Medium	plasma	Positive
+GHL65_combined	Uganda	END TB	Negative	Positive	Medium	plasma	Positive
+GHL88_combined	Uganda	END TB	Negative	Positive	Medium	plasma	Positive
+GHL103_combined	Uganda	END TB	Negative	Positive	Medium	plasma	Positive
+GHL119_combined	Uganda	END TB	Negative	Positive	Medium	plasma	Positive
+GHL123_combined	Uganda	END TB	Negative	Positive	Medium	plasma	Positive
+GHL133_combined	Uganda	END TB	Negative	Positive	Medium	plasma	Positive
+GHL204_combined	Uganda	END TB	Negative	Positive	Medium	plasma	Positive
+GHL229_combined	Uganda	END TB	Negative	Positive	Medium	plasma	Positive
+GHL252_combined	Uganda	END TB	Negative	Positive	Medium	plasma	Positive
+GHL308_combined	Uganda	END TB	Negative	Positive	Medium	plasma	Positive
+R2D2_U100_combined	Uganda	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_U102_combined	Uganda	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_U103_combined	Uganda	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_U105_combined	Uganda	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_U106_combined	Uganda	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_U110_combined	Uganda	R2D2	Positive	Negative	Negative	plasma	Negative
+R2D2_U111_combined	Uganda	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_U112_combined	Uganda	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_U114_combined	Uganda	R2D2	Positive	Negative	Negative	plasma	Negative
+R2D2_U118_combined	Uganda	R2D2	Positive	Negative	Negative	plasma	Negative
+R2D2_U122_combined	Uganda	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_U124_combined	Uganda	R2D2	Positive	Negative	Negative	plasma	Negative
+R2D2_U129_combined	Uganda	R2D2	Positive	Negative	Negative	plasma	Negative
+R2D2_U130_combined	Uganda	R2D2	Positive	Negative	Negative	plasma	Negative
+R2D2_U131_combined	Uganda	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_U132_combined	Uganda	R2D2	Positive	Negative	Negative	plasma	Negative
+R2D2_U133_combined	Uganda	R2D2	Positive	Negative	Negative	plasma	Negative
+R2D2_U135_combined	Uganda	R2D2	Positive	Negative	Negative	plasma	Negative
+R2D2_U136_combined	Uganda	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_U148_combined	Uganda	R2D2	Positive	Negative	Negative	plasma	Negative
+R2D2_U149_combined	Uganda	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_U150_combined	Uganda	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_U151_combined	Uganda	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_V108_combined	Vietnam	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_V119_combined	Vietnam	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_V120_combined	Vietnam	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_V121_combined	Vietnam	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_V124_combined	Vietnam	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_V126_combined	Vietnam	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_V132_combined	Vietnam	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_V136_combined	Vietnam	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_V137_combined	Vietnam	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_V139_combined	Vietnam	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_V143_combined	Vietnam	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_V151_combined	Vietnam	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_V152_combined	Vietnam	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_V153_combined	Vietnam	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_V159_combined	Vietnam	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_V16_combined	Vietnam	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_V161_combined	Vietnam	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_V162_combined	Vietnam	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_V163_combined	Vietnam	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_V168_combined	Vietnam	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_V170_combined	Vietnam	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_V175_combined	Vietnam	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_V177_combined	Vietnam	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_P1_combined	Philippines	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_P104_combined	Philippines	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_P105_combined	Philippines	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_P108_combined	Philippines	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_P110_combined	Philippines	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_P111_combined	Philippines	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_P113_combined	Philippines	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_P114_combined	Philippines	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_P115_combined	Philippines	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_P116_combined	Philippines	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_P118_combined	Philippines	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_P119_combined	Philippines	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_P120_combined	Philippines	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_P121_combined	Philippines	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_P123_combined	Philippines	R2D2	Positive	Negative	Negative	plasma	Negative
+R2D2_P126_combined	Philippines	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_P127_combined	Philippines	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_P128_combined	Philippines	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_P129_combined	Philippines	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_P13_combined	Philippines	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_P130_combined	Philippines	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_P131_combined	Philippines	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_P132_combined	Philippines	R2D2	Negative	Negative	Negative	plasma	Negative
+R2D2_P133_combined	Philippines	R2D2	Negative	Negative	Negative	plasma	Negative
+GHL1_combined	Uganda	END TB	Negative	Negative	Negative	plasma	Negative
+GHL3_combined	Uganda	END TB	Positive	Negative	Negative	plasma	Negative
+GHL7_combined	Uganda	END TB	Negative	Negative	Negative	plasma	Negative
+GHL9_combined	Uganda	END TB	Negative	Negative	Negative	plasma	Negative
+GHL22_combined	Uganda	END TB	Positive	Negative	Negative	plasma	Negative
+GHL30_combined	Uganda	END TB	Negative	Negative	Negative	plasma	Negative
+GHL40_combined	Uganda	END TB	Negative	Negative	Negative	plasma	Negative
+GHL52_combined	Uganda	END TB	Negative	Negative	Negative	plasma	Negative
+GHL58_combined	Uganda	END TB	Negative	Negative	Negative	plasma	Negative
+GHL63_combined	Uganda	END TB	Negative	Negative	Negative	plasma	Negative
+GHL70_combined	Uganda	END TB	Negative	Negative	Negative	plasma	Negative
+GHL75_combined	Uganda	END TB	Negative	Negative	Negative	plasma	Negative
+GHL76_combined	Uganda	END TB	Negative	Negative	Negative	plasma	Negative
+GHL89_combined	Uganda	END TB	Negative	Negative	Negative	plasma	Negative
+GHL94_combined	Uganda	END TB	Negative	Negative	Negative	plasma	Negative
+GHL99_combined	Uganda	END TB	Negative	Negative	Negative	plasma	Negative
+GHL107_combined	Uganda	END TB	Negative	Negative	Negative	plasma	Negative
+GHL117_combined	Uganda	END TB	Positive	Negative	Negative	plasma	Negative
+GHL121_combined	Uganda	END TB	Negative	Negative	Negative	plasma	Negative
+GHL128_combined	Uganda	END TB	Positive	Negative	Negative	plasma	Negative
+GHL132_combined	Uganda	END TB	Negative	Negative	Negative	plasma	Negative
+GHL134_combined	Uganda	END TB	Positive	Negative	Negative	plasma	Negative
+GHL138_combined	Uganda	END TB	Negative	Negative	Negative	plasma	Negative
+GHL158_combined	Uganda	END TB	Negative	Negative	Negative	plasma	Negative
+GHL161_combined	Uganda	END TB	Negative	Negative	Negative	plasma	Negative
+GHL166_combined	Uganda	END TB	Positive	Negative	Negative	plasma	Negative
+GHL172_combined	Uganda	END TB	Negative	Negative	Negative	plasma	Negative
+GHL176_combined	Uganda	END TB	Negative	Negative	Negative	plasma	Negative
+GHL186_combined	Uganda	END TB	Positive	Negative	Negative	plasma	Negative
+GHL188_combined	Uganda	END TB	Negative	Negative	Negative	plasma	Negative
+GHL199_combined	Uganda	END TB	Positive	Negative	Negative	plasma	Negative
+GHL201_combined	Uganda	END TB	Positive	Negative	Negative	plasma	Negative
+GHL203_combined	Uganda	END TB	Positive	Negative	Negative	plasma	Negative
+GHL210_combined	Uganda	END TB	Negative	Negative	Negative	plasma	Negative
+GHL223_combined	Uganda	END TB	Negative	Negative	Negative	plasma	Negative
+GHL230_combined	Uganda	END TB	Negative	Positive	Negative	plasma	Positive
+GHL269_combined	Uganda	END TB	Negative	Negative	Negative	plasma	Negative
+GHL277_combined	Uganda	END TB	Negative	Negative	Negative	plasma	Negative
+GHL288_combined	Uganda	END TB	Negative	Negative	Negative	plasma	Negative
+GHL293_combined	Uganda	END TB	Positive	Negative	Negative	plasma	Negative
+R2D2_U425_combined	Uganda	R2D2	Negative	Positive	Low	plasma	Positive
+R2D2_U446_combined	Uganda	R2D2	Positive	Positive	Low	plasma	Positive
+R2D2_P187_combined	Philippines	R2D2	Negative	Positive	Low	plasma	Positive
+GHL13_combined	Uganda	END TB	Negative	Positive	Low	plasma	Positive
+GHL69_combined	Uganda	END TB	Negative	Negative	Low	plasma	Negative
+R2D2_U399_combined	Uganda	R2D2	Positive	Positive	Low	plasma	Positive
+R2D2_U423_combined	Uganda	R2D2	Negative	Positive	Low	plasma	Positive
+R2D2_U436_combined	Uganda	R2D2	Positive	Positive	Low	plasma	Positive
+R2D2_U441_combined	Uganda	R2D2	Negative	Positive	Low	plasma	Positive
+R2D2_V183_combined	Vietnam	R2D2	Negative	Positive	Low	plasma	Positive
+R2D2_V200_combined	Vietnam	R2D2	Negative	Positive	Low	plasma	Positive
+R2D2_V232_combined	Vietnam	R2D2	Negative	Positive	Low	plasma	Positive
+R2D2_V240_combined	Vietnam	R2D2	Negative	Positive	Low	plasma	Positive
+R2D2_V26_combined	Vietnam	R2D2	Negative	Positive	Low	plasma	Positive
+R2D2_V280_combined	Vietnam	R2D2	Negative	Positive	Low	plasma	Positive
+R2D2_V322_combined	Vietnam	R2D2	Negative	Positive	Low	plasma	Positive
+R2D2_V54_combined	Vietnam	R2D2	Negative	Positive	Low	plasma	Positive
+R2D2_P106_combined	Philippines	R2D2	Negative	Positive	Low	plasma	Positive
+R2D2_P23_combined	Philippines	R2D2	Negative	Positive	Low	plasma	Positive
+R2D2_P253_combined	Philippines	R2D2	Negative	Positive	Low	plasma	Positive
+R2D2_P50_combined	Philippines	R2D2	Negative	Positive	Low	plasma	Positive
+R2D2_P7_combined	Philippines	R2D2	Negative	Positive	Low	plasma	Positive
+GHL37_combined	Uganda	END TB	Negative	Positive	Low	plasma	Positive
+GHL72_combined	Uganda	END TB	Negative	Positive	Low	plasma	Positive
+GHL170_combined	Uganda	END TB	Negative	Positive	Low	plasma	Positive
+GHL206_combined	Uganda	END TB	Negative	Positive	Low	plasma	Positive
+GHL284_combined	Uganda	END TB	Negative	Positive	Low	plasma	Positive
+TBSQUARE_WBRNA_553	Uganda	TBSQUARE	Negative	Positive	High	wb	Positive
+TBSQUARE_WBRNA_561	Uganda	TBSQUARE	Negative	Positive	Medium	wb	Positive
+TBSQUARE_WBRNA_554	Uganda	TBSQUARE	Negative	Negative		wb	Negative
+TBSQUARE_WBRNA_555	Uganda	TBSQUARE	Negative	Positive	Medium	wb	Positive
+TBSQUARE_WBRNA_564	Uganda	TBSQUARE	Negative	Negative		wb	Negative
+TBSQUARE_WBRNA_557	Uganda	TBSQUARE	Negative	Negative		wb	Negative
+TBSQUARE_WBRNA_568	Uganda	TBSQUARE	Negative	Negative		wb	Negative
+TBSQUARE_WBRNA_569	Uganda	TBSQUARE	Negative	Positive	Medium	wb	Positive
+TBSQUARE_WBRNA_570	Uganda	TBSQUARE	Negative	Positive	High	wb	Positive
+TBSQUARE_WBRNA_572	Uganda	TBSQUARE	Negative	Negative		wb	Negative
+TBSQUARE_WBRNA_573	Uganda	TBSQUARE	Negative	Positive	High	wb	Positive
+TBSQUARE_WBRNA_583	Uganda	TBSQUARE	Positive	Negative		wb	Negative
+TBSQUARE_WBRNA_584	Uganda	TBSQUARE	Positive	Positive	High	wb	Positive
+TBSQUARE_WBRNA_578	Uganda	TBSQUARE	Negative	Positive	Medium	wb	Positive
+TBSQUARE_WBRNA_591	Uganda	TBSQUARE	Negative	Positive	Medium	wb	Positive
+TBSQUARE_WBRNA_589	Uganda	TBSQUARE	Negative	Negative		wb	Negative
+TBSQUARE_WBRNA_597	Uganda	TBSQUARE	Positive	Positive	Medium	wb	Positive
+TBSQUARE_WBRNA_598	Uganda	TBSQUARE	Negative	Positive	High	wb	Positive
+TBSQUARE_WBRNA_596	Uganda	TBSQUARE	Negative	Negative		wb	Negative
+TBSQUARE_WBRNA_601	Uganda	TBSQUARE	Negative	Positive	Medium	wb	Positive
+TBSQUARE_WBRNA_602	Uganda	TBSQUARE	Positive	Positive	Low	wb	Positive
+TBSQUARE_WBRNA_603	Uganda	TBSQUARE	Positive	Negative		wb	Negative
+TBSQUARE_WBRNA_611	Uganda	TBSQUARE	Positive	Positive	Low	wb	Positive
+TBSQUARE_WBRNA_612	Uganda	TBSQUARE	Negative	Positive	High	wb	Positive
+TBSQUARE_WBRNA_613	Uganda	TBSQUARE	Negative	Negative		wb	Negative
+TBSQUARE_WBRNA_614	Uganda	TBSQUARE	Negative	Positive	High	wb	Positive
+TBSQUARE_WBRNA_616	Uganda	TBSQUARE	Negative	Negative		wb	Negative
+TBSQUARE_WBRNA_617	Uganda	TBSQUARE	Negative	Positive	High	wb	Positive
+TBSQUARE_WBRNA_618	Uganda	TBSQUARE	Negative	Positive	Medium	wb	Positive
+TBSQUARE_WBRNA_608	Uganda	TBSQUARE	Negative	Negative		wb	Negative
+TBSQUARE_WBRNA_609	Uganda	TBSQUARE	Negative	Positive	High	wb	Positive
+TBSQUARE_WBRNA_610	Uganda	TBSQUARE	Negative	Negative		wb	Negative
+TBSQUARE_WBRNA_619	Uganda	TBSQUARE	Negative	Negative		wb	Negative
+TBSQUARE_WBRNA_620	Uganda	TBSQUARE	Positive	Positive	Low	wb	Positive
+TBSQUARE_WBRNA_623	Uganda	TBSQUARE	Negative	Positive	High	wb	Positive
+TBSQUARE_WBRNA_628	Uganda	TBSQUARE	Negative	Positive	Low	wb	Positive
+TBSQUARE_WBRNA_630	Uganda	TBSQUARE	Positive	Positive	Low	wb	Positive
+TBSQUARE_WBRNA_631	Uganda	TBSQUARE	Positive	Negative		wb	Negative
+TBSQUARE_WBRNA_634	Uganda	TBSQUARE	Negative			wb	
+TBSQUARE_WBRNA_635	Uganda	TBSQUARE	Negative	Positive	Medium	wb	Positive
+TBSQUARE_WBRNA_636	Uganda	TBSQUARE	Negative	Positive	High	wb	Positive
+TBSQUARE_WBRNA_637	Uganda	TBSQUARE	Negative	Negative	Trace	wb	Negative
+TBSQUARE_WBRNA_638	Uganda	TBSQUARE	Negative	Negative		wb	Negative
+TBSQUARE_WBRNA_640	Uganda	TBSQUARE	Negative	Positive	High	wb	Positive
+TBSQUARE_WBRNA_648	Uganda	TBSQUARE	Negative	Positive	Medium	wb	Positive
+TBSQUARE_WBRNA_649	Uganda	TBSQUARE	Positive	Positive	Medium	wb	Positive
+TBSQUARE_WBRNA_661	Uganda	TBSQUARE	Negative	Positive	Low	wb	Positive
+TBSQUARE_WBRNA_697	Uganda	TBSQUARE	Negative	Positive	High	wb	Positive
+TBSQUARE_WBRNA_708	Uganda	TBSQUARE	Negative	Positive	Very low	wb	Positive
+TBSQUARE_WBRNA_698	Uganda	TBSQUARE	Negative	Negative		wb	Negative
+TBSQUARE_WBRNA_711	Uganda	TBSQUARE	Negative	Positive	Medium	wb	Positive
+TBSQUARE_WBRNA_693	Uganda	TBSQUARE	Negative	Positive	Medium	wb	Positive
+TBSQUARE_WBRNA_695	Uganda	TBSQUARE	Negative	Negative	Negative	wb	Negative
+TBSQUARE_WBRNA_696	Uganda	TBSQUARE	Negative	Negative	Negative	wb	Negative
+TBSQUARE_WBRNA_702	Uganda	TBSQUARE	Negative	Negative	Negative	wb	Negative
+TBSQUARE_WBRNA_703	Uganda	TBSQUARE	Negative	Positive	Low	wb	Positive

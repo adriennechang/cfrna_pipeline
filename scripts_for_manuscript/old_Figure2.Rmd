@@ -1,0 +1,534 @@
+---
+title: "Figure2"
+output: html_document
+date: "2023-03-22"
+---
+
+
+### FIGURE 2A
+```{r}
+set.seed(21) ## Changing the seed randomizes the greedy forward search
+
+suppressMessages(library(dplyr))
+suppressMessages(library(ggplot2))
+suppressMessages(library(edgeR))
+suppressMessages(library(pROC))
+suppressMessages(library(magrittr))
+suppressMessages(library(caret))
+suppressMessages(library(reshape2))
+suppressMessages(library(stringr))
+suppressMessages(library(ggpubr))
+
+metadata_file = "../files_for_manuscript/meta_data.txt"
+gene.list_file = "../files_for_manuscript/gencode.biotype.name.key.tsv"
+subset_file = "../files_for_manuscript/top150genes.csv"
+count.matrix_file = "../files_for_manuscript/count_matrix.txt"
+
+group_column = "Microbiologic.reference.standard"
+group1_name = "TB Positive"
+group2_name = "TB Negative"
+sample_column = "Cornell_ID"
+train_prop=0.7
+```
+
+```{r}
+## load files
+gene.list = read.delim(gene.list_file, col.names=c("gene_id","gene_name","type"))
+count.matrix= read.table(count.matrix_file, row.names=c(1))
+metadata = read.delim(metadata_file)
+subset = read.delim(subset_file)
+gene.list_keep = gene.list[gene.list$gene_name %in% subset$x,1]
+```
+
+```{r}
+counts = count.matrix
+
+counts = counts[rownames(counts) %in% gene.list_keep,]
+
+counts= counts %>% edgeR::cpm() %>% t() %>% data.frame()  
+
+counts$Cornell_ID = rownames(counts)
+
+train_ind = sample(seq_len(nrow(counts)), size=0.70*nrow(counts))
+
+counts_train = counts[train_ind,]
+counts_test = counts[-train_ind,]
+
+
+metadata_train = metadata[metadata$Cornell_ID %in% rownames(counts_train),]
+metadata_test = metadata[metadata$Cornell_ID %in% rownames(counts_test),]
+
+
+
+counts_train.melt = melt(data.table(counts_train),id.var="Cornell_ID")
+counts_train.melt = merge(counts_train.melt, metadata, by="Cornell_ID")
+counts_train.melt = merge(counts_train.melt,  gene.list[gene.list$gene_id %in% gene.list_keep,1:2], by.x="variable", by.y="gene_id")
+head(counts_train.melt)
+
+counts_test.melt = melt(data.table(counts_test),id.var="Cornell_ID")
+counts_test.melt = merge(counts_test.melt, metadata, by="Cornell_ID")
+counts_test.melt = merge(counts_test.melt,  gene.list[gene.list$gene_id %in% gene.list_keep,1:2], by.x="variable", by.y="gene_id")
+head(counts_test.melt)
+counts2 = counts_train %>% t() %>% data.frame()
+```
+
+```{r}
+starts = gene.list_keep
+starts_df = matrix(ncol=4, NA)
+colnames(starts_df)=c("gene","auc", "lowci","upci")
+
+for (s in starts){
+    df = merge(counts2[rownames(counts2)==s,] %>% t()  %>% data.frame() %>% mutate_all(as.numeric) %>%
+                   mutate( log2( . + 1)) %>% 
+                   set_colnames("score"), metadata_train, 
+               by.x="row.names", by.y="Cornell_ID")
+    auc = auc(df$Microbiologic.reference.standard, as.numeric(df$score))
+    lowci = ci.auc(df$Microbiologic.reference.standard, as.numeric(df$score))[1]
+    upci = ci.auc(df$Microbiologic.reference.standard, as.numeric(df$score))[3]
+    starts_df = rbind(starts_df, cbind("gene"=s, "auc"=auc, "lowci" = lowci, "upci" = upci))
+}
+
+starts_df = starts_df %>% data.frame() %>% dplyr::arrange(desc(auc)) 
+
+
+
+plot_df = matrix(ncol=4, NA)
+colnames(plot_df)=c("combination","auc", "lowci","upci")
+
+plot_df = rbind(plot_df, cbind("combination"=starts_df[1,1], "auc"=starts_df[1,2], "lowci" = starts_df[1,3], "upci"=starts_df[1,4]))
+
+best_auc = plot_df %>% data.frame() %>% filter(row_number()==n())
+best_auc = best_auc$auc
+best_auc
+```
+```{r}
+res = counts_train.melt %>% group_by(variable,Microbiologic.reference.standard) %>% summarise(val = mean(value))
+res2 = dcast(data.table(res), variable ~ Microbiologic.reference.standard)
+res2$diff = ifelse((res2$`TB Positive` - res2$`TB Negative` > 0), "up", "down")
+```
+
+
+```{r}
+df2 = matrix(ncol=4,NA)
+colnames(df2)=c("combination","auc", "lowci","upci")
+
+start = plot_df[2,1]
+rest = starts[!(starts %in% start)]
+
+for (r in 1:length(rest)){
+    
+    comb = c(start,rest[r])
+    
+    pos = res2[res2$diff == "up",] %>% filter(variable %in% comb) %>% pull(variable)
+    neg =res2[res2$diff == "down",] %>% filter(variable %in% comb)%>% pull(variable)
+    
+    
+    if (length(pos)==1){
+        pos_counts =counts2[rownames(counts2) %in% pos,]   %>% data.frame() %>% mutate_all(as.numeric) %>% 
+            mutate( log2( . + 1))%>% 
+            t()%>% set_colnames("pos_score")
+    } else if (length(pos)>1) {
+        pos_counts =counts2[rownames(counts2) %in% pos,]   %>% 
+            data.frame() %>% mutate_all(as.numeric) %>% 
+            mutate( log2( . + 1)) %>% 
+            summarise_all(mean) %>% t() %>% set_colnames("pos_score")      
+    } else{
+        pos_counts=NA
+    }
+    
+    if (length(neg)==1){
+        neg_counts =counts2[rownames(counts2) %in% neg,]   %>% data.frame() %>% mutate_all(as.numeric) %>% 
+            mutate( log2( . + 1))%>%
+            t() %>%
+            set_colnames("neg_score")
+    } else if (length(neg)>1) {
+        neg_counts =counts2[rownames(counts2) %in% neg,]   %>% 
+            data.frame() %>% mutate_all(as.numeric) %>% 
+            mutate( log2( . + 1))%>%
+            summarise_all(mean) %>% t() %>% set_colnames("neg_score") 
+    } else {
+        neg_counts = NA
+    }
+    
+    
+    if (!is.na(neg_counts) & !is.na(pos_counts)){
+        df_test = merge(pos_counts,neg_counts, by="row.names")
+        df_test = merge(df_test, metadata_train, by.x="Row.names", by.y="Cornell_ID")
+        
+        df_test$score = df_test$pos_score - df_test$neg_score
+        auc = auc(df_test$Microbiologic.reference.standard, as.numeric(df_test$score))
+        lowci = ci.auc(df_test$Microbiologic.reference.standard, as.numeric(df_test$score))[1]
+        upci = ci.auc(df_test$Microbiologic.reference.standard, as.numeric(df_test$score))[3]
+        
+        df2 = rbind(df2, cbind("combination" = paste(comb, collapse="_"),"auc"=auc, "lowci" = lowci, "upci"=upci))
+    } else if (is.na(neg_counts) & !is.na(pos_counts)){
+        df_test = merge(pos_counts, metadata_train, by.x="row.names", by.y="Cornell_ID")
+        
+        df_test$score = df_test$pos_score
+        auc = auc(df_test$Microbiologic.reference.standard, as.numeric(df_test$score))
+        lowci = ci.auc(df_test$Microbiologic.reference.standard, as.numeric(df_test$score))[1]
+        upci = ci.auc(df_test$Microbiologic.reference.standard, as.numeric(df_test$score))[3]
+        
+        df2 = rbind(df2, cbind("combination" = paste(comb, collapse="_"),"auc"=auc, "lowci"=lowci, "upci"=upci))
+    } else {
+        df_test = merge(neg_counts, metadata_train, by.x="row.names", by.y="Cornell_ID")
+        
+        df_test$score = df_test$neg_score
+        auc = auc(df_test$Microbiologic.reference.standard, as.numeric(df_test$score))
+        lowci = ci.auc(df_test$Microbiologic.reference.standard, as.numeric(df_test$score))[1]
+        upci = ci.auc(df_test$Microbiologic.reference.standard, as.numeric(df_test$score))[3]
+        
+        df2 = rbind(df2, cbind("combination" = paste(comb, collapse="_"),"auc"=auc, "lowci"=lowci, "upci"=upci))
+    }
+}
+```
+
+```{r}
+while (!is.na(best_auc)){
+    sorted_df = df2 %>% data.frame()%>% filter(as.numeric(auc) > best_auc) %>% arrange(desc(auc))
+    new_start = unlist(strsplit(sorted_df[1,1], split="_"))
+    new_rest = starts[!(starts %in% new_start)]
+    
+    df2 = matrix(ncol=4,NA)
+    colnames(df2)=c("combination","auc", "lowci", "upci")
+    best_auc = as.numeric(sorted_df[1,2])
+    plot_df = rbind(plot_df, cbind("combination"=sorted_df[1,1], "auc"=best_auc, "lowci" = sorted_df[1,3], "upci" = sorted_df[1,4]))
+    
+    for (r in 1:length(new_rest)){
+        comb = c(new_start,new_rest[r])
+        
+        pos = res2[res2$diff == "up",] %>% filter(variable %in% comb) %>% pull(variable)
+        neg =res2[res2$diff == "down",] %>% filter(variable %in% comb)%>% pull(variable)
+        
+        
+        if (length(pos)==1){
+            pos_counts =counts2[rownames(counts2) %in% pos,]   %>% data.frame() %>% mutate_all(as.numeric) %>% 
+                mutate( log2( . + 1))%>% 
+                t()%>% set_colnames("pos_score")
+        } else if (length(pos)>1) {
+            pos_counts =counts2[rownames(counts2) %in% pos,]   %>% 
+                data.frame() %>% mutate_all(as.numeric) %>% 
+                mutate( log2( . + 1)) %>% 
+                summarise_all(mean) %>% t() %>% set_colnames("pos_score")      
+        } else{
+            pos_counts=NA
+        }
+        
+        if (length(neg)==1){
+            neg_counts =counts2[rownames(counts2) %in% neg,]   %>% data.frame() %>% mutate_all(as.numeric) %>% 
+                mutate( log2( . + 1)) %>% 
+                t() %>%
+                set_colnames("neg_score")
+        } else if (length(neg)>1) {
+            neg_counts =counts2[rownames(counts2) %in% neg,]   %>% 
+                data.frame() %>% mutate_all(as.numeric) %>% 
+                mutate( log2( . + 1))%>% 
+                summarise_all(mean) %>% t() %>% set_colnames("neg_score") 
+        } else {
+            neg_counts = NA
+        }
+        
+        
+        
+        if (!is.na(neg_counts) & !is.na(pos_counts)){
+            df_test = merge(pos_counts,neg_counts, by="row.names")
+            df_test = merge(df_test, metadata_train, by.x="Row.names", by.y="Cornell_ID")
+            
+            df_test$score = df_test$pos_score - df_test$neg_score
+            auc = auc(df_test$Microbiologic.reference.standard, df_test$score)
+            lowci = ci.auc(df_test$Microbiologic.reference.standard, df_test$score)[1]
+            upci = ci.auc(df_test$Microbiologic.reference.standard, df_test$score)[3]
+            df2 = rbind(df2, cbind("combination" = paste(comb, collapse="_"),"auc"=auc, "lowci"=lowci, "upci"=upci))
+        } else if (is.na(neg_counts) & !is.na(pos_counts)){
+            df_test = merge(pos_counts, metadata_train, by.x="row.names", by.y="Cornell_ID")
+            
+            df_test$score = df_test$pos_score
+            auc = auc(df_test$Microbiologic.reference.standard, df_test$score)
+            
+            
+            lowci = ci.auc(df_test$Microbiologic.reference.standard, df_test$score)[1]
+            upci = ci.auc(df_test$Microbiologic.reference.standard, df_test$score)[3]
+            df2 = rbind(df2, cbind("combination" = paste(comb, collapse="_"),"auc"=auc, "lowci"=lowci, "upci"=upci))
+        } else {
+            df_test = merge(neg_counts, metadata_train, by.x="row.names", by.y="Cornell_ID")
+            
+            df_test$score = df_test$neg_score
+            auc = auc(df_test$Microbiologic.reference.standard, df_test$score)
+            
+            
+            lowci = ci.auc(df_test$Microbiologic.reference.standard, df_test$score)[1]
+            upci = ci.auc(df_test$Microbiologic.reference.standard, df_test$score)[3]
+            df2 = rbind(df2, cbind("combination" = paste(comb, collapse="_"),"auc"=auc, "lowci"=lowci, "upci"=upci))
+        }
+    }
+    
+    plot.roc(df_test$Microbiologic.reference.standard, df_test$score, print.auc=TRUE)
+}
+
+
+```
+```{r}
+plot_df2 = data.frame(plot_df)
+plot_df2 = plot_df2[!is.na(plot_df2$auc),]
+plot_df2$iteration = c(seq(1:dim(plot_df2)[1]))
+plot_df2$last = sapply(strsplit(plot_df2$combination ,"_"), tail, 1)
+plot_df2 = merge(plot_df2, gene.list, by.x="last", by.y="gene_id")
+
+ggplot(plot_df2, aes(x=iteration, y=as.numeric(auc), label=gene_name))+ geom_line(color="grey50")+
+theme_bw(base_size=10) + xlab("# Genes in Model") + ylab("AUC") + 
+geom_text(hjust=0.5, vjust=0.5, size=6, color="darkblue")+
+scale_x_continuous(breaks=scales::pretty_breaks())
+```
+
+```{r}
+best = plot_df2 %>% arrange(iteration) %>% filter(row_number() ==n())
+best = best[1,2]
+best_genes = unlist(str_split(best,"_"))
+counts_val = counts_test %>% t() %>% data.frame()
+
+
+pos = res2[res2$diff == "up",] %>% filter(variable %in% best_genes) %>% pull(variable)
+neg =res2[res2$diff == "down",] %>% filter(variable %in% best_genes)%>% pull(variable)
+
+if (length(pos)==1){
+    
+    pos_counts = counts_val[rownames(counts_val)%in% pos,] %>% data.frame() %>% mutate_all(as.numeric)  %>%
+        mutate( log2( . + 1)) %>%  
+        t() %>%
+        set_colnames("pos_score")
+} else if (length(pos)>1) {
+    pos_counts =counts_val[rownames(counts_val) %in% pos,]   %>% 
+        data.frame() %>% mutate_all(as.numeric) %>%
+        mutate( log2( . + 1)) %>% 
+        summarise_all(mean) %>% t() %>% set_colnames("pos_score")      
+    
+} else{
+    pos_counts=NA
+}
+
+if (length(neg)==1){
+    neg_counts = counts_val[rownames(counts_val)%in% neg,] %>% data.frame() %>% mutate_all(as.numeric)  %>% 
+        mutate( log2( . + 1)) %>%  
+        t() %>%
+        set_colnames("neg_score")
+} else if (length(neg)>1) {
+    neg_counts =counts_val[rownames(counts_val) %in% neg,]   %>% 
+        data.frame() %>% mutate_all(as.numeric) %>% 
+        mutate( log2( . + 1)) %>% 
+        summarise_all(mean) %>% t() %>% set_colnames("neg_score")      
+    
+} else {
+    neg_counts = NA
+}
+
+
+if (!is.na(neg_counts) & !is.na(pos_counts)){
+    df_val = merge(pos_counts,neg_counts, by="row.names")
+    df_val = merge(df_val, metadata_test, by.x="Row.names", by.y="Cornell_ID")
+    
+    df_val$score = df_val$pos_score - df_val$neg_score
+    auc_val = auc(df_val$Microbiologic.reference.standard, df_val$score)
+    
+} else if (is.na(neg_counts) & !is.na(pos_counts)){
+    df_val = merge(pos_counts, metadata_test, by.x="row.names", by.y="Cornell_ID")
+    
+    df_val$score = df_val$pos_score
+    auc_val = auc(df_val$Microbiologic.reference.standard, df_val$score)
+    
+} else {
+    df_val = merge(neg_counts, metadata_test, by.x="row.names", by.y="Cornell_ID")
+    
+    df_val$score = df_val$neg_score
+    auc_val = auc(df_val$Microbiologic.reference.standard, df_val$score)
+    
+}
+
+
+
+```
+```{r}
+best = plot_df2 %>% arrange(iteration) %>% filter(row_number() ==n())
+best = best[1,2]
+best_genes = unlist(str_split(best,"_"))
+#counts = read.delim("../takara_human_V2/resequence/output/GHL_R2D2_feature_counts.tsv", row.names=c(1))
+#counts= counts %>% edgeR::cpm() %>% t() %>% data.frame()  
+
+
+pos = res2[res2$diff == "up",] %>% filter(variable %in% best_genes) %>% pull(variable)
+neg =res2[res2$diff == "down",] %>% filter(variable %in% best_genes)%>% pull(variable)
+
+if (length(pos)==1){
+    
+    pos_counts = counts2[rownames(counts2)%in% pos,] %>% data.frame() %>% mutate_all(as.numeric)  %>%
+        mutate( log2( . + 1)) %>% 
+        t() %>%
+        set_colnames("pos_score")
+} else if (length(pos)>1) {
+    pos_counts =counts2[rownames(counts2) %in% pos,]   %>% 
+        data.frame() %>% mutate_all(as.numeric) %>% 
+        mutate( log2( . + 1)) %>% 
+        summarise_all(mean) %>% t() %>% set_colnames("pos_score")      
+    
+} else{
+    pos_counts=NA
+}
+
+if (length(neg)==1){
+    neg_counts = counts2[rownames(counts2)%in% neg,] %>% data.frame() %>% mutate_all(as.numeric)  %>% 
+        mutate( log2( . + 1)) %>% 
+        t() %>%
+        set_colnames("neg_score")
+} else if (length(neg)>1) {
+    neg_counts =counts2[rownames(counts2) %in% neg,]   %>% 
+        data.frame() %>% mutate_all(as.numeric) %>% 
+        mutate( log2( . + 1)) %>% 
+        summarise_all(mean) %>% t() %>% set_colnames("neg_score")      
+    
+} else {
+    neg_counts = NA
+}
+
+
+if (!is.na(neg_counts) & !is.na(pos_counts)){
+    df_final = merge(pos_counts,neg_counts, by="row.names")
+    df_final = merge(df_final, metadata_train, by.x="Row.names", by.y="Cornell_ID")
+    
+    df_final$score = df_final$pos_score - df_final$neg_score
+    auc_final = auc(df_final$Microbiologic.reference.standard, df_final$score)
+    
+} else if (is.na(neg_counts) & !is.na(pos_counts)){
+    df_final = merge(pos_counts, metadata_train, by.x="row.names", by.y="Cornell_ID")
+    
+    df_final$score = df_final$pos_score
+    auc_final = auc(df_final$Microbiologic.reference.standard, df_final$score)
+    
+} else {
+    df_final = merge(neg_counts, metadata_train, by.x="row.names", by.y="Cornell_ID")
+    
+    df_final$score = df_final$neg_score
+    auc_final = auc(df_final$Microbiologic.reference.standard, df_final$score)
+    
+}
+
+```
+### FIGURE 2B
+
+```{r}
+counts_val = read.table("../files_for_manuscript/count_matrix_validation.txt", row.names=c(1))
+val_score = counts_val[rownames(counts_val) %in% gene.list_keep,] %>% edgeR::cpm() %>% data.frame() %>%
+  filter(rownames(.) %in% best_genes) %>% data.frame() %>% mutate_all(as.numeric) %>%
+  mutate(log2( . +1)) %>% summarise_all(mean) %>% 
+  t() %>% data.frame() %>% set_colnames("score") %>% add_colum('sample'=rownames( . )) %>%
+  merge(., metadata, by.x="sample", by.y="Cornell_ID")
+```
+
+
+```{r}
+ggroc(list("train" = roc(df_final$Microbiologic.reference.standard, df_final$score), 
+           "test" = roc(df_val$Microbiologic.reference.standard, df_val$score),
+           "validate" = roc(val_score$Microbiologic.reference.standard, val_score$score)), legacy.axes=T) 
+
+auc(roc(df_final$Microbiologic.reference.standard, df_final$score))
+ci.auc(roc(df_final$Microbiologic.reference.standard, df_final$score))
+auc(roc(df_val$Microbiologic.reference.standard, df_val$score))
+ci.auc(roc(df_val$Microbiologic.reference.standard, df_val$score))
+auc(roc(val_score$Microbiologic.reference.standard, val_score$score))
+ci.auc(roc(val_score$Microbiologic.reference.standard, val_score$score))
+```
+
+###  FIGURE 2C
+```{r}
+youden = coords(roc(df_final$Microbiologic.reference.standard, df_final$score),x="best", best.method="youden" )$threshold
+
+
+ggplot(df_final, aes(x=Microbiologic.reference.standard, y=score)) + geom_violin(color=NA, alpha=0.2,aes(fill=Microbiologic.reference.standard)) + theme_bw(base_size=8) +
+geom_jitter(aes(color=Microbiologic.reference.standard), size=0.5) + geom_hline(yintercept = youden) +
+scale_fill_manual(values=c("#2E294E", "#FF70A6"))+ scale_color_manual(values=c("#2E294E", "#FF70A6")) +
+theme(legend.position="none", axis.title.x=element_blank(), axis.text=element_text(size=6, color="black")) + ylab("9-gene TB Score") + ggtitle("Train")
+
+ggplot(df_val, aes(x=Microbiologic.reference.standard, y=score)) + geom_violin(color=NA, alpha=0.2,aes(fill=Microbiologic.reference.standard)) + theme_bw(base_size=8) +
+geom_jitter(aes(color=Microbiologic.reference.standard), size=0.5) + geom_hline(yintercept = youden) +
+scale_fill_manual(values=c("#2E294E", "#FF70A6"))+ scale_color_manual(values=c("#2E294E", "#FF70A6")) +
+theme(legend.position="none", axis.title.x=element_blank(), axis.text=element_text(size=6, color="black")) + ylab("9-gene TB Score") + ggtitle("Test")
+
+ggplot(val_score, aes(x=Microbiologic.reference.standard, y=score)) + geom_violin(color=NA, alpha=0.2,aes(fill=Microbiologic.reference.standard)) + theme_bw(base_size=8) +
+geom_jitter(aes(color=Microbiologic.reference.standard), size=0.5) + geom_hline(yintercept = youden) +
+scale_fill_manual(values=c("#2E294E", "#FF70A6"))+ scale_color_manual(values=c("#2E294E", "#FF70A6")) +
+theme(legend.position="none", axis.title.x=element_blank(), axis.text=element_text(size=6, color="black")) + ylab("9-gene TB Score") + ggtitle("Validation")
+```
+```{r}
+df_final$pred[df_final$score > youden] = "Positive"
+df_final$pred[df_final$score < youden] = "Negative"
+
+df_val$pred[df_val$score > youden] = "Positive"
+df_val$pred[df_val$score < youden] = "Negative"
+
+df_final$pred = factor(df_final$pred, levels=c("Negative","Positive"))
+df_final$expGroup = factor(df_final$expGroup, levels=c("Negative","Positive"))
+df_val$pred = factor(df_val$pred, levels=c("Negative","Positive"))
+df_val$expGroup = factor(df_val$expGroup, levels=c("Negative","Positive"))
+
+confusionMatrix(data = df_final$pred, reference = df_final$expGroup)
+confusionMatrix(data = df_val$pred, reference = df_val$expGroup)
+```
+### FIGURE 2D
+```{r}
+newdf = counts[rownames(counts) %in% gene.list_keep,] %>% mutate_all(as.numeric) %>% edgeR::cpm() %>% data.frame() %>% filter(rownames(.) %in% best_genes)
+newdf_val = counts_val[rownames(counts_val) %in% gene.list_keep,] %>% mutate_all(as.numeric) %>% mutate( log2( . +1)) %>% data.frame() %>% t() %>% data.frame()
+newdf$gene_id=rownames(newdf)
+newdf.melt = melt(newdf, id.var=("gene_id"))
+newdf.melt = merge(newdf.melt, metadata, by.x="variable",by.y="Cornell_ID")
+newdf.melt = merge(newdf.melt, gene.list %>% filter(gene_id %in% best_genes), by="gene_id")
+newdf.melt$`Semiquant.Xpert.result.3`=newdf.melt$Semiquant.Xpert.result.2
+newdf.melt$`Semiquant.Xpert.result.3` = gsub(newdf.melt$`Semiquant.Xpert.result.3`, pattern="Very low", replacement="Low")
+newdf.melt$`Semiquant.Xpert.result.3` = gsub(newdf.melt$`Semiquant.Xpert.result.3`, pattern="Trace", replacement="Low")
+
+newdf.melt$`Semiquant.Xpert.result.3` = factor(newdf.melt$`Semiquant.Xpert.result.3`, levels=c("Negative","Low","Medium","High"))
+head(newdf.melt)
+
+ggplot(newdf.melt[newdf.melt$value > 0,], aes(x=cohort, y=value, fill=Semiquant.Xpert.result.3)) + geom_boxplot() + 
+    theme_bw(base_size=8) + theme(axis.text.x=element_text(color="black", size=6), axis.title.x=element_blank(),
+                                  legend.position="top", strip.text=element_text(size=6),
+                                  axis.text.y=element_text(size=6, color="black"), axis.title.y=element_text(size=8, color="black")) +
+    ylab("log2(CPM+1)") +facet_wrap(.~gene_name,scales="free") +scale_fill_manual(values=c("#73D2DE","#218380","#FFBC42","#D81159"))
+```
+
+### FIGURE 2E
+```{r}
+newdf.melt  %>% group_by(Semiquant.Xpert.result.3, variable, cohort) %>% summarise(value = mean(value)) %>%  
+    group_by(Semiquant.Xpert.result.3, cohort) %>% summarise(mean = mean(value, na.rm = TRUE),
+                                                             sd = sd(value, na.rm = TRUE),
+                                                             n = n()) %>%
+    mutate(se = sd / sqrt(n),
+           lower.ci = mean - qt(1 - (0.05 / 2), n - 1) * se,
+           upper.ci = mean + qt(1 - (0.05 / 2), n - 1) * se)%>%
+    ggplot(aes(x=Semiquant.Xpert.result.3, y=mean, color=cohort, group=cohort)) + geom_point(size=0.5) +
+    geom_line() + geom_errorbar(aes(ymin=lower.ci, ymax=upper.ci),alpha=0.5) + theme_bw(base_size=8) +
+    theme(legend.position="none", legend.text=element_text(color="black")) +
+    xlab("Semiquant Xpert") + ylab("9-gene TB score") +
+    scale_color_manual(values=c("#D81159", "#73D2DE"))
+```
+### FIGURE 2F
+```{r}
+newdf.melt %>% group_by(variable, CAD4TB.score, Semiquant.Xpert.result.3,Microbiologic.reference.standard, cohort) %>% 
+    summarise(score=mean(value)) %>%
+    ggplot(aes(x=CAD4TB.score, y=score, color=Microbiologic.reference.standard, group=cohort)) + geom_point(size=0.5)+
+    theme_bw(base_size=8) + geom_smooth(method="loess", span=2, color="black")+
+    theme(legend.position="none", axis.text=element_text(size=6, color="black")) +
+    xlab("CAD4TB Score") + ylab("9-gene TB score")+ scale_color_manual(values=c("#433F60", "#FF70A6")) + stat_cor(method="pearson")
+
+newdf.melt %>% group_by(variable, qXR.score, Semiquant.Xpert.result.3,Microbiologic.reference.standard, cohort) %>% 
+    summarise(score=mean(value)) %>%
+    ggplot(aes(x=qXR.score, y=score, color=Microbiologic.reference.standard, group=cohort)) + geom_point(size=0.5)+
+    theme_bw(base_size=8) + geom_smooth(method="loess", span=2, color="black")+
+    theme(legend.position="none", axis.text=element_text(size=6, color="black")) +
+    xlab("qXR Score") + ylab("9-gene TB score")+ scale_color_manual(values=c("#433F60", "#FF70A6"))+ stat_cor(method="pearson")
+
+newdf.melt %>% group_by(variable, Lunit.score, Semiquant.Xpert.result.3,Microbiologic.reference.standard, cohort) %>% 
+    summarise(score=mean(value)) %>%
+    ggplot(aes(x=Lunit.score, y=score, color=Microbiologic.reference.standard, group=cohort)) + geom_point(size=0.5)+
+    theme_bw(base_size=8) + geom_smooth(method="loess", span=2, color="black")+
+    theme(legend.position="none", axis.text=element_text(size=6, color="black")) +
+    xlab("Lunit Score") + ylab("9-gene TB score")+ scale_color_manual(values=c("#433F60", "#FF70A6"))+ stat_cor(method="pearson")
+```
+

@@ -17,12 +17,14 @@ suppressMessages(library(qualpalr))
 ```
 
 ```{r}
-meta_data = read.table("../files_for_manuscript/meta_data.txt", sep="\t",header=T)
+meta_data = read.table("../files_for_manuscript/meta_data_updated.txt", sep="\t", header=T)
 head(meta_data)
 ```
 ```{r}
 decon = read.table("../files_for_manuscript/cto.txt", sep="\t", header=T)
-decon_melt = melt(decon, id.vars="sample_id") %>% rename(celltype= variable, fraction=value)
+decon_val = read.delim("../files_for_manuscript/cto_validation.txt", sep="\t", header=T)
+decon = rbind(decon, decon_val)
+decon_melt = data.table(decon) %>% melt(. , id.vars="sample_id") %>% rename(celltype= variable, fraction=value)
 decon_melt = merge(decon_melt, meta_data, by.x="sample_id", by.y="Cornell_ID")
 head(decon_melt)
 ```
@@ -37,20 +39,23 @@ genes = sum$celltype
 num_cells = length(genes)
 pal = c('#1362AB','#740C33','#2C8DAF','#FB927F','#5CFBF4','#0234C1','#86C35E','#B414A8','#F191B8','#949D0A','#700862','#F5DB9E','#209510','#DBB008','#5C6BFA','#B27DF2','#D6F306','#5EFE36','#A9DAC9','#B2040D','#203760','#4D5D0D','#4A1E80','#F63DFA','#F8169B','#175738','#0C8559','#A1506B','#861FF1','#2BBBB3','#5E210C','#36B976','#CAA376','#D75E16','#73480D','#39F9AD','#85D2F8','#65A2FC','#FC092B','#94A514','#AEBBE6')
 
-colors = pal[1:8]
+colors = pal
 labels = genes
 
 val_vector = colors
-names(val_vector) = c("Platelet","Myeloid.progenitor","B.cell","Endothelial.cell","NK.Cell","Monocyte","neutrophil", "other")
+names(val_vector) = labels
 
-results$celltype2 = results$celltype
+val_vector[names(val_vector) %in% c("Platelet","Myeloid.progenitor","B.cell","Endothelial.cell","NK.Cell","Monocyte","neutrophil")]= c("#72D2D3","#FFBC42","#D81159","#218380","#8F2D56","#2E294E","#CADB7A")
+val_vector[!(names(val_vector) %in% c("Platelet","Myeloid.progenitor","B.cell","Endothelial.cell","NK.Cell","Monocyte","neutrophil"))] =" #EBEBEB"
+
+results$celltype2 = as.character(results$celltype)
 results$celltype2[!(results$celltype2) %in% c("Platelet","Myeloid.progenitor","B.cell","Endothelial.cell","NK.Cell","Monocyte","neutrophil")] = "other"
 ```
 
 
 ```{r}
 results %>% group_by(sample_id, cohort, celltype2) %>% summarise(fraction=sum(fraction)) %>% group_by(celltype2,cohort) %>% 
-    summarise(fraction=mean(fraction)) %>% 
+    summarise(fraction=mean(fraction)) %>% mutate(celltype2 = factor(celltype2, levels=c("Platelet","Myeloid.progenitor","B.cell","Endothelial.cell","NK.Cell","Monocyte","neutrophil", "other")))%>%
     ggplot(aes(x=cohort,y=fraction,fill=celltype2))+
     geom_bar(position="stack",stat="identity", colour="black",size = 0.15)+
     theme_minimal(base_size=20)+
@@ -58,7 +63,8 @@ results %>% group_by(sample_id, cohort, celltype2) %>% summarise(fraction=sum(fr
           legend.position = "top",
           axis.title.x = element_blank(), 
           legend.text=element_text(size=10), legend.title= element_blank(), legend.key.size=unit(0.25, 'cm'))+
-    scale_fill_manual(values=val_vector) + scale_x_discrete(labels=c("END TB\nn=89", "R2D2\nn=93"))
+    scale_fill_manual(values=c(val_vector[1:7], "other"="#EBEBEB"), 
+                      labels=c("Platelet","Myeloid progenitor", "B Cell", "Endothelial cell","NK Cell","Monocyte","Neutrophil","Other")) + scale_x_discrete(labels=c("END TB\nn=89", "R2D2\nn=93", "TB2\nn=55"))
 ```
 ### FIGURE 1C
 
@@ -76,17 +82,34 @@ GROUPS = c("Positive","Negative")
 meta_data$expGroup = meta_data$Microbiologic.reference.standard
 meta_data$expGroup = gsub(meta_data$expGroup, pattern="TB ", replacement="")
 
+
+samples = meta_data[meta_data$Biofluid!="wb" & meta_data$expGroup!="",]
+rownames(samples)=samples$Cornell_ID
+
+
 gene_name_key = "../files_for_manuscript/gencode.biotype.name.key.tsv"
 
 counts = read.table("../files_for_manuscript/count_matrix.txt", row.names=c(1))
+counts$geneID = rownames(counts)
+counts_val = read.table("../files_for_manuscript/count_matrix_validation.txt", row.names=c(1))
+counts_val$geneID = rownames(counts_val)
+
+counts = merge(counts, counts_val, by="geneID", all=T)
+rownames(counts)=counts$geneID
+
+
+samples=samples[samples$Cornell_ID %in% colnames(counts),]
+counts = counts[,samples$Cornell_ID]
+counts[is.na(counts)]=0
 head(counts)
 ```
 
 ```{r}
 ## Construct DESeqDataSet
 
-dds = DESeqDataSetFromMatrix(round(counts), colData = meta_data,
-                                     design = ~ expGroup + HIV.status + cohort + 0)
+
+dds = DESeqDataSetFromMatrix(round(counts), colData = samples,
+                                     design = ~ expGroup +  cohort + 0)
 
 ## Add Gene metadata
 annotation = fread(file = gene_name_key)
@@ -139,8 +162,9 @@ mycolors <- list(
     ),
     HIV.Status = c("Positive"= "#f77f00",
                    "Negative" = "#8F2D56"),
-    cohort = c("GHL" = "#73D2DE",
-               "R2D2" = "#b5179e"),
+    cohort = c("END TB" = "#73D2DE",
+               "R2D2" = "#b5179e",
+               "TBSQUARE"="orange"),
     Country = c("Uganda" = "#218380",
                 "Vietnam" = "#FFBC42",
                 "Philippines" = "#D81159")
