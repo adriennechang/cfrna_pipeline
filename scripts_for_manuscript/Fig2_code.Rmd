@@ -639,6 +639,7 @@ cxr %>% group_by(variable) %>% summarise(cor = cor(value, score, method="pearson
 ```
 
 ```{r}
+library(rmarkdown)
 convert_ipynb("Fig2_code.ipynb", output = xfun::with_ext("Fig2_code", "Rmd"))
 ```
 
