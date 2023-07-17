@@ -35,7 +35,7 @@ count_file_plasma = "../files_for_manuscript/count_matrix_validation.txt"
 SAMPLE_ID_VAR = "Cornell_ID"
 gene_name_key = "../files_for_manuscript/gencode.biotype.name.key.tsv"
 gene.list = read.delim(gene_name_key)
-meta = read.delim("../files_for_manuscript/meta_data_updated.txt")
+meta = read.delim("../files_for_manuscript/metadata_validation.txt")
 top150 = read.delim("../files_for_manuscript/top150genes.csv")
 keep.gene = gene.list[gene.list$gene_name %in% top150$x,1]
 signature = gene.list[gene.list$gene_name %in% c("GBP5","DYSF","VAMP5","SMARCD3","FCGR3B","GPI","CREB5","GBP2", "MPO"),1]
@@ -85,18 +85,12 @@ roc_wb = wb_score %>% roc(Microbiologic.reference.standard, score, percent=T)
 ```
 
 ```{r}
-
 options(repr.plot.height=1.4, repr.plot.width=1.7)
 ggroc(list("TB2 (Plasma)"= roc_plasma, "TB2 (WB)" = roc_wb ),aes=c("color"))  +
     theme_bw(base_size=6) + guides(color="none", linetype="none")+
     geom_line(size=1,alpha=0.5)+ scale_color_manual(values=c("#96BE25","#F88C1A")) +
 xlab("Specificity (%)") + ylab("Sensitivity (%)") +
 theme(axis.text=element_text(size=6, color="black"), axis.title=element_text(size=8, color="black"))
-```
-
-```{r}
-ci.auc(roc_plasma)
-ci.auc(roc_wb)
 ```
 
 ## FIG 4B
@@ -156,9 +150,17 @@ cto_wb = read.delim("../files_for_manuscript/cto_wb.txt")
 ```
 
 ```{r}
+meta_discovery = read.delim("../files_for_manuscript/metadata_discovery.txt")
+                            
+combined_metadata = meta_discovery %>% select(Cornell_ID, Country, cohort, HIV.status, Microbiologic.reference.standard, Semiquant.Xpert.result.3) %>% 
+tibble::add_column("Biofluid"="plasma") %>% 
+mutate(Cornell_ID = paste0(Cornell_ID,"_combined")) %>% rbind(. , meta)
+```
+
+```{r}
 decon = rbind(cto_discovery, cto_validation, cto_wb)
 decon_melt = unique(melt(decon, id.vars="sample_id") %>% rename(celltype = variable, fraction = value)  %>%
-    merge(. , meta, by.x="sample_id", by.y="Cornell_ID"))
+    merge(. , combined_metadata, by.x="sample_id", by.y="Cornell_ID"))
 ```
 
 ```{r}
@@ -168,7 +170,7 @@ sum <- sum[order(sum$mean,decreasing=TRUE),]
 
 genes = sum$celltype
 
-suppressMesssages(library(qualpalr))
+library(qualpalr)
 
 num_cells = length(genes)
 pal = sample(rev(qualpal(num_cells, colorspace=list(h=c(0,360), s=c(0.3,1), l=c(0.2,0.8)))$hex))
@@ -234,6 +236,13 @@ theme(axis.title.x=element_blank(),
      legend.position="none") + 
 ylab("Solid Organ Fraction") +ylim(0,1) +
 scale_fill_manual(values=c("#00D2DE", "#B5179E", "#96BE25", "#F88C1A"))
+```
+
+```{r}
+res_melt_solid %>% 
+    mutate(celltype = factor(celltype,levels=genes)) %>%
+group_by(sample_id, cohort) %>% summarise(val=sum(newfraction))  %>%
+compare_means(val~cohort, data=.)
 ```
 
 ## FIG 4D
@@ -392,6 +401,12 @@ mutate( log2( . +1)) %>% t() %>% data.frame() %>% tibble::add_column("sample"=ro
 reshape2::melt(. ,id.var="sample") %>% merge(.,meta, by.x="sample", by.y="Cornell_ID") )%>% 
 filter(value!=0)%>%data.frame()  %>%
 compare_means(data = ., value~Microbiologic.reference.standard, group.by="Biofluid")
+```
+
+```{r}
+int+u_wb+u_pl
+u_wb
+u_pl
 ```
 
 ```{r}

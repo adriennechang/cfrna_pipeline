@@ -22,4 +22,24 @@ output file: Figure1.knit.md
 
 Output created: Figure1.html
 [?25h[?25h]777;notify;Command completed;Rscript -e 'library(rmarkdown)  library(data.table)  rmarkdown::render("Figure1.Rmd", "html_document")'\]777;precmd\]0;ac2763@cbsuvlaminck4:/workdir/ac2763/cfRNA_pipeline/scripts_for_manuscript\]7;file://cbsuvlaminck4.biohpc.cornell.edu/workdir/ac2763/cfRNA_pipeline/scripts_for_manuscript\[?2004h[ac2763@cbsuvlaminck4 scripts_for_manuscript]$ cp Fig2_code.ipynb /..[K[K[K../analysis/
-[?2004l]777;preexec\]777;notify;Command completed;cp Fig2_code.ipynb ../analysis/\]777;precmd\]0;ac2763@cbsuvlaminck4:/workdir/ac2763/cfRNA_pipeline/scripts_for_manuscript\]7;file://cbsuvlaminck4.biohpc.cornell.edu/workdir/ac2763/cfRNA_pipeline/s
+[?2004l]777;preexec\]777;notify;Command completed;cp Fig2_code.ipynb ../analysis/\]777;precmd\]0;ac2763@cbsuvlaminck4:/workdir/ac2763/cfRNA_pipeline/scripts_for_manuscript\]7;file://cbsuvlaminck4.biohpc.cornell.edu/workdir/ac2763/cfRNA_pipeline/scripts_for_manuscript\[?2004h[ac2763@cbsuvlaminck4 scripts_for_manuscript]$ cp ../analysis/Fig2_code.ipynb 
+[?2004l]777;preexec\cp: missing destination file operand after '../analysis/Fig2_code.ipynb'
+Try 'cp --help' for more information.
+]777;notify;Command completed;cp ../analysis/Fig2_code.ipynb \]777;precmd\]0;ac2763@cbsuvlaminck4:/workdir/ac2763/cfRNA_pipeline/scripts_for_manuscript\]7;file://cbsuvlaminck4.biohpc.cornell.edu/workdir/ac2763/cfRNA_pipeline/scripts_for_manuscript\[?2004h[ac2763@cbsuvlaminck4 scripts_for_manuscript]$ cp ../analysis/Fig2_code.ipynb .
+[?2004l]777;preexec\]777;notify;Command completed;cp ../analysis/Fig2_code.ipynb .\]777;precmd\]0;ac2763@cbsuvlaminck4:/workdir/ac2763/cfRNA_pipeline/scripts_for_manuscript\]7;file://cbsuvlaminck4.biohpc.cornell.edu/workdir/ac2763/cfRNA_pipeline/scripts_for_manuscript\[?2004h[ac2763@cbsuvlaminck4 scripts_for_manuscript]$ cp ../analysis/Fig2_code.Rmd .
+[?2004l]777;preexec\]777;notify;Command completed;cp ../analysis/Fig2_code.Rmd .\]777;precmd\]0;ac2763@cbsuvlaminck4:/workdir/ac2763/cfRNA_pipeline/scripts_for_manuscript\]7;file://cbsuvlaminck4.biohpc.cornell.edu/workdir/ac2763/cfRNA_pipeline/scripts_for_manuscript\[?2004h[ac2763@cbsuvlaminck4 scripts_for_manuscript]$ cp ../analysis/Fig2_code.Rmd .[K[K[K[K[K[K([K* .
+[?2004l]777;preexec\]777;notify;Command completed;cp ../analysis/Fig2_code* .\]777;precmd\]0;ac2763@cbsuvlaminck4:/workdir/ac2763/cfRNA_pipeline/scripts_for_manuscript\]7;file://cbsuvlaminck4.biohpc.cornell.edu/workdir/ac2763/cfRNA_pipeline/scripts_for_manuscript\[?2004h[ac2763@cbsuvlaminck4 scripts_for_manuscript]$ cd ../
+[?2004l]777;preexec\]777;notify;Command completed;cd ../\]777;precmd\]0;ac2763@cbsuvlaminck4:/workdir/ac2763/cfRNA_pipeline\]7;file://cbsuvlaminck4.biohpc.cornell.edu/workdir/ac2763/cfRNA_pipeline\[?2004h[ac2763@cbsuvlaminck4 cfRNA_pipeline]$ git add scripts_for_manuscript/
+[?2004l]777;preexec\]777;notify;Command completed;git add scripts_for_manuscript/\]777;precmd\]0;ac2763@cbsuvlaminck4:/workdir/ac2763/cfRNA_pipeline\]7;file://cbsuvlaminck4.biohpc.cornell.edu/workdir/ac2763/cfRNA_pipeline\[?2004h[ac2763@cbsuvlaminck4 cfRNA_pipeline]$ git add files_for_manuscript/
+[?2004l]777;preexec\]777;notify;Command completed;git add files_for_manuscript/\]777;precmd\]0;ac2763@cbsuvlaminck4:/workdir/ac2763/cfRNA_pipeline\]7;file://cbsuvlaminck4.biohpc.cornell.edu/workdir/ac2763/cfRNA_pipeline\[?2004h[ac2763@cbsuvlaminck4 cfRNA_pipeline]$ git pu[K[Kcommit -m "aup[K[K[Kupdate code"
+[?2004l]777;preexec\[main b6525c3] update code
+ 6 files changed, 881 insertions(+), 25987 deletions(-)
+ delete mode 100644 scripts_for_manuscript/Figure2.Rmd
+ delete mode 100644 scripts_for_manuscript/Figure2.html
+ create mode 100644 scripts_for_manuscript/library(knitr); knit('Figure1.Rmd')
+]777;notify;Command completed;git commit -m "update code"\]777;precmd\]0;ac2763@cbsuvlaminck4:/workdir/ac2763/cfRNA_pipeline\]7;file://cbsuvlaminck4.biohpc.cornell.edu/workdir/ac2763/cfRNA_pipeline\[?2004h[ac2763@cbsuvlaminck4 cfRNA_pipeline]$ ti[K[Kgit push
+[?2004l]777;preexec\Enumerating objects: 12, done.
+Counting objects:   8% (1/12)Counting objects:  16% (2/12)Counting objects:  25% (3/12)Counting objects:  33% (4/12)Counting objects:  41% (5/12)Counting objects:  50% (6/12)Counting objects:  58% (7/12)Counting objects:  66% (8/12)Counting objects:  75% (9/12)Counting objects:  83% (10/12)Counting objects:  91% (11/12)Counting objects: 100% (12/12)Counting objects: 100% (12/12), done.
+Delta compression using up to 128 threads
+Compressing objects:  14% (1/7)Compressing objects:  28% (2/7)Compressing objects:  42% (3/7)Compressing objects:  57% (4/7)Compressing objects:  71% (5/7)Compressing objects:  85% (6/7)Compressing objects: 100% (7/7)Compressing objects: 100% (7/7), done.
+Writing objects:  14% (1/7)Writing objects:  28% (2/7)Writing objects:  42% (3/7)Writing objects:  57% (4/7)Writing ob
