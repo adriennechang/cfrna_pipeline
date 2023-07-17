@@ -37,7 +37,7 @@ TBSQUARE_cfRNA_623_combined	Uganda	TBSQUARE	Negative	Positive	High	plasma
 TBSQUARE_cfRNA_628_combined	Uganda	TBSQUARE	Negative	Positive	Low	plasma
 TBSQUARE_cfRNA_630_combined	Uganda	TBSQUARE	Positive	Positive	Low	plasma
 TBSQUARE_cfRNA_631_combined	Uganda	TBSQUARE	Positive	Negative		plasma
-TBSQUARE_cfRNA_634_combined	Uganda	TBSQUARE	Negative			plasma
+TBSQUARE_cfRNA_634_combined	Uganda	TBSQUARE	Negative	Negative	Negative	plasma
 TBSQUARE_cfRNA_635_combined	Uganda	TBSQUARE	Negative	Positive	Medium	plasma
 TBSQUARE_cfRNA_636_combined	Uganda	TBSQUARE	Negative	Positive	High	plasma
 TBSQUARE_cfRNA_637_combined	Uganda	TBSQUARE	Negative	Negative	Trace	plasma
@@ -343,7 +343,7 @@ TBSQUARE_WBRNA_623	Uganda	TBSQUARE	Negative	Positive	High	wb
 TBSQUARE_WBRNA_628	Uganda	TBSQUARE	Negative	Positive	Low	wb
 TBSQUARE_WBRNA_630	Uganda	TBSQUARE	Positive	Positive	Low	wb
 TBSQUARE_WBRNA_631	Uganda	TBSQUARE	Positive	Negative		wb
-TBSQUARE_WBRNA_634	Uganda	TBSQUARE	Negative			wb
+TBSQUARE_WBRNA_634	Uganda	TBSQUARE	Negative	Negative	Negative	wb
 TBSQUARE_WBRNA_635	Uganda	TBSQUARE	Negative	Positive	Medium	wb
 TBSQUARE_WBRNA_636	Uganda	TBSQUARE	Negative	Positive	High	wb
 TBSQUARE_WBRNA_637	Uganda	TBSQUARE	Negative	Negative	Trace	wb
